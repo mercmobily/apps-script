@@ -6,27 +6,13 @@ import '../../page-main/page-main.js';
 import '../../page-one/page-one.js';
 import { templateAbout } from './templateAbout.js';
 
-export class WattleApp extends LitElement {
+export class AppsScript extends LitElement {
   static get properties() {
     return {
       title: { type: String },
       page: { type: String },
       data: { type: Array }
     };
-  }
-
-  constructor () {
-    super()
-    this.data = []
-    this.page = 'main';
-  }
-
-  firstUpdated () {
-
-    const success = (data) => this.data = data
-    this.data = google.script.run.withSuccessHandler(success).getData();
-
-    debugger
   }
 
   static get styles() {
@@ -88,8 +74,18 @@ export class WattleApp extends LitElement {
     `;
   }
 
+  constructor() {
+    super();
+    this.page = 'main';
+    this.data = []
+  }
+
+  firstUpdated () {
+    const success = data => this.data = data
+    google.script.run.withSuccessHandler(success).getData();
+  }
+
   render() {
-    debugger
     return html`
       <header>
         <ul>
@@ -111,10 +107,6 @@ export class WattleApp extends LitElement {
         </ul>
       </header>
 
-      ${this.data.map(line => {
-        return html`${JSON.stringify(line)}`
-      })}
-
       <main>
         ${this._renderPage()}
       </main>
@@ -131,6 +123,9 @@ export class WattleApp extends LitElement {
       case 'main':
         return html`
           <page-main .logo=${openWcLogo}></page-main>
+          ${this.data.map(d => {
+            return html`${JSON.stringify(d)}`
+          })}
         `;
       case 'pageOne':
         return html`
@@ -147,6 +142,7 @@ export class WattleApp extends LitElement {
 
   __onNavClicked(ev) {
     ev.preventDefault();
+    debugger
     this.page = ev.target.hash.substring(1);
   }
 

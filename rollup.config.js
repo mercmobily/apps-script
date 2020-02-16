@@ -12,12 +12,11 @@ import resolve from 'rollup-plugin-node-resolve'
 module.exports = [
 
   {
-    input: './components/wattle-app/wattle-app.js',
+    input: './components/apps-script/apps-script.js',
     output: {
-      file: 'distr/wattle-app.js', // IIFE ONE FILE
+      file: '/tmp/built.js', // IIFE ONE FILE
       format: 'esm'
     },
     plugins: [resolve({})]
   }
 ]
-

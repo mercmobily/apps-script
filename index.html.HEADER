@@ -14,16 +14,16 @@
       background-color: #ededed;
     }
   </style>
-  <title>wattle-app</title>
+  <title>Apps Script App</title>
 </head>
 <body>
-  <wattle-app title="Hello owc world!"></wattle-app>
+<apps-script title="Hello owc world!"></apps-script>
 
   <script>
   function success( data ){
     console.log(data)
   }
-  this.data = google.script.run.withSuccessHandler( success ).getData();
+  this.data = google.script.run.withSuccessHandler(success).getData();
 
   </script>
 

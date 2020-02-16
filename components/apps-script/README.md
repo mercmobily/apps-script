@@ -1,19 +1,19 @@
-# \<wattle-app>
+# \<apps-script>
 
 This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
 
 ## Installation
 ```bash
-npm i wattle-app
+npm i apps-script
 ```
 
 ## Usage
 ```html
 <script type="module">
-  import 'wattle-app/wattle-app.js';
+  import 'apps-script/apps-script.js';
 </script>
 
-<wattle-app></wattle-app>
+<apps-script></apps-script>
 ```
 
 undefined

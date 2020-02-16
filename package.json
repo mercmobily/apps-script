@@ -1,11 +1,10 @@
 {
   "scripts": {
-    "build": "rimraf distr && rollup -c rollup.config.js && cat index.html.HEADER distr/wattle-app.js index.html.FOOTER > appsScript/index.html",
+    "build": "rimraf distr && rollup -c rollup.config.js && cat index.html.HEADER /tmp/built.js index.html.FOOTER > appsScript/index.html",
     "push": "cd appsScript; clasp push",
     "start": "cd appsScript; clasp open --webapp",
     "buildPush": "npm run build; npm run push",
-    "buildPushStart": "npm run buildPush; npm run start",
-
+    "buildPushStart": "npm run buildPush; npm run start"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^0.15.1",
@@ -13,10 +12,10 @@
     "rollup": "^1.15.4",
     "es-dev-server": "^1.5.0"
   },
-  "name": "wattle-app",
+  "name": "apps-script-app",
   "version": "0.0.1",
-  "description": "Webcomponent wattle-app following open-wc recommendations",
-  "author": "wattle-app",
+  "description": "Webcomponent apps-script following open-wc recommendations",
+  "author": "Tony Mobily",
   "license": "MIT",
   "dependencies": {
     "lit-html": "^1.0.0",

@@ -2,7 +2,7 @@
   "version": 2,
   "tags": [
     {
-      "name": "wattle-app",
+      "name": "apps-script",
       "description": "An application with a title and an action counter",
       "properties": [
         {
