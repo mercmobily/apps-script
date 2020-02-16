@@ -2706,6 +2706,7 @@ class WattleApp extends LitElement {
   }
 
   render() {
+    debugger
     return html`
       <header>
         <ul>
