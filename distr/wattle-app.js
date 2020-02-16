@@ -2758,6 +2758,4 @@ class WattleApp extends LitElement {
   }
 }
 
-console.log('a');
-
 window.customElements.define('wattle-app', WattleApp);
