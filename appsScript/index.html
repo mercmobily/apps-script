@@ -2546,6 +2546,6210 @@
   </svg>
 `;
 
+    // In Material Design color tool: https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=616161&secondary.color=512DA8
+
+    const Common = (base) => {
+      return class Base extends base {
+        static get stylePatterns () {
+          const css = super.lit.css;
+          return {
+            // This is a light implementation of material guidelines.
+            // It does not aim to be a complete, comprehensive, Material Design components library, but to showcase the flexiblity of the TPE theming system.
+            // Guidelines can be found in: https://material.io/components
+
+            requiredLabelAsterisk: css`
+          #native:required ~ label div#label-text::after {
+            content: '*';
+            padding-left: 2px;
+            position: relative;
+          }
+        `,
+
+            hoverStyle: css`
+          :host(:hover) {
+            --mat-theme-box-shadow: var(--mat-theme-box-shadow2);
+          }
+
+          :host([disabled]:hover) {
+            --mat-theme-box-shadow: none;
+          }
+        `,
+            focusStyle: css`
+          :host([has-focus]), :host([has-focus][outlined]) {
+            --mat-theme-border: 2px solid var(--mat-primary-color);
+            --mat-label-color: var(--mat-primary-color);
+          }
+
+          :host([has-focus]) #native {
+            padding-bottom: -1px;
+          }
+        `,
+
+            inputField: css`
+          :host {
+            position: relative;
+            padding: 0 12px;
+            padding-bottom: 16px;
+            margin: 5px;
+            min-width: var(--mat-form-element-min-width, fit-content);
+            font-family: var(--font-family);
+          }
+
+          :host([disabled]) {
+            --mat-input-color: var(--mat-boundaries-color, #999)
+          }
+
+          :host([dense]) {
+            --mat-form-element-height: 40px;
+            padding-bottom: 8px;
+          }
+
+          :host([dense]) #native {
+            padding: var(--mat-form-element-padding, 14px 10px 0);
+          }
+
+          :host([outlined]) {
+            --mat-background: white;
+            --mat-background-dark: white;
+            --mat-theme-border: 2px solid #ccc;
+          }
+
+          :host([outlined]) #native {
+            border-bottom: unset;
+            border: var(--mat-input-border, var(--mat-theme-border));
+            border-radius: var(--mat-input-border-radius, 4px);
+          }
+
+          #native {
+            box-sizing: border-box;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            box-sizing: border-box;
+            display: block;
+            border-radius: var(--mat-input-border-radius, 4px 4px 0 0);
+            border-width: 0;
+            border-style: solid;
+            border-color: transparent;
+            border-bottom: var(--mat-input-border, var(--mat-theme-border));
+            color: var(--mat-input-color, inherit);
+            background-color: var(--mat-background, #eee);
+            width: 100%;
+            font-size: 14px;
+            padding:  var(--mat-form-element-padding, 20px 16px 0);
+            height: var(--mat-form-element-height);
+            box-shadow: var(--mat-theme-box-shadow);
+          }
+
+          #native:focus,
+          #native:active {
+            outline: none
+          }
+
+          #native::selection {
+            background-color: var(--mat-background-dark);
+          }
+
+          #native:invalid {
+            background-color: var(--mat-error-color);
+            color: var(--mat-error-text);
+            border-color: var(--mat-error-text);
+          }
+
+          #native:disabled {
+            filter: saturate(0);
+            opacity: 0.85;
+          }
+
+          #native:disabled:hover {
+            background-color: initial !important;
+          }
+
+          /* this.hoverStyle */
+          :host(:hover) {
+            --mat-theme-box-shadow: var(--mat-theme-box-shadow2);
+          }
+
+          :host([disabled]:hover) {
+            --mat-theme-box-shadow: none;
+          }
+
+          /* this.focusStyle */
+          :host([has-focus]), :host([has-focus][outlined]) {
+            --mat-theme-border: 2px solid var(--mat-primary-color);
+            --mat-label-color: var(--mat-primary-color);
+          }
+
+          :host([has-focus]) #native {
+            padding-bottom: -1px;
+          }
+        `,
+
+            inputLabel: css`
+           label {
+            position: absolute;
+            display: inline-flex;
+            font-size: 16px;
+            border: var(--mat-label-border, none);
+            color: var(--mat-label-color,  var(--mat-primary-color-light));
+            padding-left: 6px;
+            padding-right: 6px;
+            margin-left: 8px;
+            min-width: fit-content;
+            white-space: nowrap;
+            --half-height: calc(var(--mat-form-element-height) / 2);
+            top: var(--half-height);
+            transform: translateY(-50%);
+            left: 12px;
+            will-change: transform;
+            transition: transform 0.1s ease-in-out;
+          }
+
+          #native:invalid + label,
+          #native:invalid ~ label {
+            background-color: none;
+            --mat-label-color: darkred;
+          }
+        `,
+
+            floatingLabel: css`
+          :host([has-value]) label,
+          #native:focus ~ label,
+          #native:placeholder-shown ~ label {
+            transform: translateY(calc(var(--half-height) / -1)) translateX(-10px) scale(0.8);
+            transition: transform 0.1s ease-in-out, background 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          }
+
+          :host([dense][has-value]) label,
+          :host([dense]) #native:focus ~ label,
+          :host([dense]) #native:placeholder-shown ~ label {
+            background: var(--mat-label-background, transparent)
+          }
+
+          :host([outlined]:not([dense][has-value]) label,
+          :host([outlined]:not([dense]) #native:focus ~ label,
+          :host([outlined]:not([dense]) #native:placeholder-shown ~ label {
+            transform: translateY(calc(var(--half-height) / -1)) translateX(-10px) scale(0.8);
+            background: var(--mat-label-background, transparent);
+          }
+        `,
+
+            fixedLabel: css`
+          label, #native:focus ~ label,
+          :host([has-value]) label,
+          #native:placeholder-shown ~ label {
+            top: 12px !important;
+            transform: translateY(-50%) scale(0.8);
+          }
+
+        `,
+
+            errorMessage: css`
+          span.error-message {
+            position: absolute;
+            bottom: 0;
+            left: 16px;
+            font-size: 80%;
+            white-space: nowrap;
+            opacity: 0;
+            line-height: 0.8;
+          }
+
+          #native:invalid ~ span.error-message {
+            opacity: 1;
+          }
+        `,
+
+            hideNativeWidget: css`
+          input {
+            position: unset;
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+          }
+        `
+          }
+        }
+
+        static get styles () {
+          const css = super.lit.css;
+          return [
+            super.styles || [],
+            css`
+          @-webkit-keyframes fadeIn {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+          }
+          @-moz-keyframes fadeIn {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+          }
+          @-o-keyframes fadeIn {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+          }
+          @keyframes fadeIn {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+          }
+
+          @-webkit-keyframes fadeOut {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+          }
+          @-moz-keyframes fadeOut {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+          }
+          @-o-keyframes fadeOut {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+          }
+          @keyframes fadeOut {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+          }
+
+          :host {
+            display: block;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            box-sizing: border-box;
+            --mat-font-family: Roboto, sans-serif;
+            --mat-primary-color: #455a64;
+            --mat-primary-color-light: #718792;
+            --mat-primary-color-dark: #1c313a;
+            --mat-secondary-color: #512da8;
+            --mat-secondary-color-light: #8559da;
+            --mat-secondary-color-dark: #140078;
+            --mat-boundaries-color: #999;
+            --mat-primary-text: #333;
+            --mat-secondary-text: #000;
+            --mat-text-on-dark: #fff;
+            --mat-text-on-light: #000;
+            --mat-error-color: pink;
+            --mat-error-text: darkred;
+            --mat-theme-border-style: solid;
+            --mat-theme-border-width: 1px;
+            --mat-theme-border-color: var(--mat-boundaries-color);
+            --mat-theme-border-radius: 4px;
+            --mat-theme-border: var(--mat-theme-border-width) var(--mat-theme-border-style) var(--mat-theme-border-color);
+            --mat-theme-box-shadow: none;
+            --mat-theme-box-shadow1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --mat-theme-box-shadow2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --mat-theme-box-shadow3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --mat-theme-box-shadow4: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --mat-theme-box-shadow5: 0 25px 50px -12px rgba(0, 0, 0, 0.25));
+            --mat-theme-shadow-transition: box-shadow 0.3s cubic-bezier(.25,.8,.25,1);
+            --mat-form-element-height: 56px;
+            --mat-form-element-min-width: 280px;
+            --mat-background: white;
+            --mat-background-dark: #ccc;
+            --mat-label-background: transparent;
+          }
+
+          :host([hidden]) {
+            display: none;
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const EeDrawer = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const EeNetwork = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const EeSnackBar = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const EeTabs = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        :host {
+          --ee-tabs-selected-color: var(--mat-primary-color);
+          --ee-tabs-color: var(--mat-primary-text);
+        }
+
+        :host nav > ::slotted(*:hover) {
+          box-shadow: var(--mat-theme-box-shadow4);
+        }
+
+        :host nav > ::slotted(*) {
+          border-bottom: 0 !important;
+          transition: all 0.3s ease-in-out;
+          position: relative;
+          box-sizing: border-box;
+        }
+
+        :host nav > ::slotted(*[active]) {
+          color: var(--ee-tabs-selected-color);
+          border-bottom: 0;
+        }
+
+        :host nav > ::slotted(*:focus),
+        :host nav > ::slotted(*:hover) {
+          outline:0 ;
+          border-bottom: 0;
+          filter: brightness(150%);
+        }
+
+        :host nav > ::slotted(*)::after,
+        :host nav > ::slotted(*:not([active]))::after {
+          content: '';
+          position: absolute;
+          transition: height 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out;
+          bottom: 0;
+          left: 50%;
+          right: 50%;
+          height: 1px;
+          background-color: var(--ee-tabs-selected-color);
+        }
+
+        :host nav > ::slotted(*:focus)::after,
+        :host nav > ::slotted(*:hover)::after {
+          height: 1px;
+          left: 0.5px;
+          right: 0.5px;
+          transition: height 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out;
+        }
+
+        :host nav > ::slotted(*[active])::after {
+          content: '';
+          background-color: var(--ee-tabs-selected-color);
+          left: 0.5px;
+          right: 0.5px;
+          bottom: 0;
+          height: 4px;
+          transition: height 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out;;
+        }
+
+        :host nav > ::slotted(*:active) {
+          background: #cccccc;
+          border-bottom: 0;
+          box-shadow: none;
+        }
+
+        `
+          ]
+        }
+      }
+    };
+
+    const EeFab = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+          button:focus, button:active {
+            outline:0 ;
+          }
+
+          button:active {
+            border: none;
+            filter: brightness(130%);
+          }
+
+          button[disabled] {
+            box-shadow: none;
+            opacity: 0.5;
+            pointer-events: none;
+          }
+
+          button.icon:active {
+            background: #cccccc;
+            border: unset;
+          }
+
+          button {
+            cursor: pointer;
+            height: 56px;
+            width: 56px;
+            margin: 6px;
+            border-radius: 50%;
+            box-shadow: 4px 2px 10px 0 rgba(0,0,0,0.12);
+            padding-top: 5px;
+            fill: var(--mat-fab-color, white);
+            background-color: var(--mat-fab-background, black);
+            color: var(--mat-fab-color, white);
+          }
+
+          :host([mini]) button {
+            height: 40px;
+            width: 40px;
+          }
+
+          button[data-descr]::after {
+            content: '';
+            right: 0;
+            display: inline-block;
+            opacity: 0;
+            position: absolute;
+            width: 0;
+            transform: translateY(-50%);
+            top: 50%;
+            text-align: center;
+            white-space: nowrap;
+            padding: 10px 16px;
+          }
+
+          button[data-descr]:hover::after {
+            content: attr(data-descr);
+            width: fit-content;
+            opacity: 1;
+            background-color: var(--mat-fab-background, black);
+            color: var(--mat-fab-color, white);
+            border-radius: calc(1em + 20px);
+            z-index: 1;
+            right: 105%;
+            font-size: 1em;
+            transition: all 0.3s ease-in-out;
+          }
+
+          button svg {
+            width: var(--mat-fab-icon-width, 24px);
+            height: var(--mat-fab-icon-height, 24px);
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const EeToolbar = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const EeHeader = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const EnForm = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+          :invalid {
+            border: unset;
+            border-bottom: var(--mat-input-border, var(--mat-theme-border));
+          }
+
+          ::slotted(*) fieldset {
+            border-radius: 5px;
+            border-style: solid;
+            padding: 16px;
+          }
+
+          ::slotted(*) legend {
+            padding-inline-start: 10px;
+            padding-inline-end: 10px;
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const EnInputRange = (base) => {
+      return class Base extends base {
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.stylePatterns.errorMessage,
+            super.lit.css`
+
+        ::slotted(#range-amount) {}
+        `
+          ]
+        }
+      }
+    };
+
+    const AddHasValueAttributeMixin = (base) => {
+      return class Base extends base {
+        _observeInput (e) {
+          const target = e.currentTarget;
+          this.toggleAttribute('has-value', !!target.value.length);
+        }
+
+        _observeFocus (e) {
+          this.toggleAttribute('has-focus', true);
+        }
+
+        _observeBlur (e) {
+          this.toggleAttribute('has-focus', false);
+        }
+
+        afterSettingProperty (prop, newValue) {
+          super.afterSettingProperty();
+
+          if (prop === 'value') {
+            this.toggleAttribute('has-value', !!newValue);
+          }
+        }
+
+        firstUpdated () {
+          super.firstUpdated();
+
+          this.native.addEventListener('input', this._observeInput);
+          this.native.addEventListener('focus', this._observeFocus);
+          this.native.addEventListener('blur', this._observeBlur);
+
+          this.toggleAttribute('has-value', !!this.value);
+        }
+      }
+    };
+
+    const NnInputText = (base) => {
+      return class Base extends AddHasValueAttributeMixin(base) {
+        // render () {
+        //   if (this.themeRender) return this.themeRender()
+        //   const class = {
+        //     'has-value': !!this.value,
+        //     'has-leading': !!this.leading,
+        //     'has-trailing': !!this.trailing
+        //   };
+        //   return html`
+        //     ${this.ifLabelBefore}
+        //     ${this.ifValidationMessageBefore}
+        //     <input class=${classMap(class)} type="text" id="native" real-time-event="input">
+        //     ${this.ifValidationMessageAfter}
+        //     ${this.ifLabelAfter}
+        //     <slot id="datalist-slot" name="datalist"></slot>
+        //   `
+        // }
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessagePosition: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+        }
+
+        firstUpdated () {
+          super.firstUpdated();
+          for (const k of ['leading', 'trailing']) {
+            const el = document.createElement('slot');
+            el.setAttribute('name', k);
+            this.shadowRoot.appendChild(el);
+          }
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.stylePatterns.inputLabel,
+            super.stylePatterns.floatingLabel,
+            super.stylePatterns.errorMessage,
+            super.lit.css`
+          #native[has-leading] {
+            padding-left: 36px;
+          }
+
+          #native[has-trailing] {
+            padding-right: 36px;
+          }
+
+          ::slotted([slot=leading]),
+          ::slotted([slot=trailing]) {
+            position: absolute;
+            top: var( --mat-input-icon-top, 16px);
+            left: var( --mat-input-icon-left, 16px);
+            height: var( --mat-input-icon-height, 24px);
+            width: var( --mat-input-icon-width, 24px);
+          }
+
+          ::slotted([slot=trailing]) {
+            left: unset;
+            right: var( --mat-input-icon-right, 16px);
+          }
+
+          :host([has-leading]:not([has-value])) label{
+            margin-left: 36px
+          }
+
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputButton = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+          :host {
+            display: inline-block;
+            width: fit-content;
+            padding: 10px;
+          }
+
+          :host > input {
+            height: var(--button-height, 30px);
+            -webkit-appearance: none;
+            background-color: var(--nn-input-button-background, var(--mat-primary-color));
+            border-radius: var(--nn-input-button-border-radius, 4px);
+            border: var(--nn-input-button-border, var(--mat-theme-border));
+            border-color: transparent;
+            text-transform: uppercase;
+            color: var(--nn-input-button-color, var(--mat-text-on-dark));
+            border-image: none;
+          }
+
+          input:hover {
+            filter: brightness(130%);
+          }
+
+          input:active, input:focus {
+            outline: none;
+          }
+
+          input:active, :host([outlined]:not([text])) input:active {
+            transition: all 0.2s ease-out;
+            border-color: rgba(0, 0, 0, 0.1);
+            border-style: inset;
+            border-color: var(--mat-primary-color);
+          }
+
+          :host([text]:not([outlined])) input,
+          :host([text]:not([raised])) input {
+            background-color: transparent;
+            color: var(--nn-input-button-color, var(--mat-primary-color));
+          }
+
+          :host([text]:not([outlined])) input:active,
+          :host([text]:not([raised])) input:active {
+            border-style: solid;
+            border-width: 1px;
+            border-color: transparent;
+          }
+
+          :host([text]:not([outlined])) input:hover,
+          :host([text]:not([raised])) input:hover {
+            background-color: var(--mat-primary-color-light);
+            color: var(--mat-primary-color-dark)
+          }
+
+          :host([outlined]:not([text])) input,
+          :host([outlined]:not([raised])) input {
+            background-color: transparent;
+            color: var(--nn-input-button-color, var(--mat-primary-color));
+            border: var(--nn-input-button-border, var(--mat-theme-border));
+          }
+
+          :host([outlined]:not([text])) input:hover,
+          :host([outlined]:not([raised])) input:hover {
+            background-color: var(--mat-primary-color-light);
+            color: var(--mat-primary-color-dark)
+          }
+
+          :host([raised]:not([text])) input,
+          :host([raised]:not([outlined])) input {
+            box-shadow: var(--mat-theme-box-shadow2);
+            transition: box-shadow 0.2s ease-out;
+          }
+
+          :host([raised]:not([text])) input:active,
+          :host([raised]:not([outlined])) input:active {
+            box-shadow: none;
+            transition: box-shadow 0.2s ease-out;
+            filter: brightness(90%);
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const NnButton = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+          :host {
+            width: fit-content;
+            padding: 4px 10px;
+          }
+
+          button {
+            display: inline-block;
+            white-space: nowrap;
+            height: var(--nn-button-height, 30px);
+            -webkit-appearance: none;
+            background-color: var(--mat-primary-color);
+            border-radius: var(--nn-button-border-radius, 4px);
+            border: var(--nn-button-border, var(--mat-theme-border));
+            border-color: transparent;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: var(--nn-button-color, var(--mat-text-on-dark));
+            fill: var(--nn-button-color, var(--mat-text-on-dark));
+            border-image: none;
+            width: 100%;
+            align-items: center;
+          }
+
+          :host ::slotted(*) {
+            vertical-align: middle;
+          }
+
+          :host ::slotted(svg) {
+            display: inline-block;
+            vertical-align: middle;
+          }
+
+          #native:disabled {
+            filter: saturate(0);
+            opacity: 0.85;
+          }
+
+          #native:disabled:hover {
+            background-color: initial !important;
+          }
+
+          button:hover {
+            filter: brightness(130%);
+          }
+
+          button:active {
+            outline: none;
+          }
+
+          button:focus {
+            border-color: var(--mat-primary-color, rgba(255, 255, 255, 0.7));
+            background-color: var(--mat-primary-color-light);
+            filter: brightness(115%);
+          }
+
+          button:active {
+            transition: all 0.2s ease-out;
+            border-style: inset;
+            border-color: var(--mat-primary-color);
+          }
+
+          :host([text]:not([outlined])) button,
+          :host([text]:not([raised])) button {
+            background-color: transparent;
+            color: var(--nn-button-color, var(--mat-primary-color));
+            fill: var(--nn-button-color, var(--mat-primary-color));
+          }
+
+          :host([text]:not([outlined])) button:focus,
+          :host([text]:not([raised])) button:focus {
+            background-color: transparent;
+            color: var(--nn-button-color, var(--mat-primary-color));
+            fill: var(--nn-button-color, var(--mat-primary-color));
+            box-shadow: var(--mat-theme-box-shadow2);
+          }
+
+          :host([text]:not([outlined])) button:active,
+          :host([text]:not([raised])) button:active {
+            border-style: solid;
+            border-width: 1px;
+            border-color: transparent;
+          }
+
+          :host([text]:not([outlined])) button:hover,
+          :host([text]:not([raised])) button:hover {
+            background-color: var(--mat-primary-color-light);
+            color: var(--mat-primary-color-dark);
+            fill: var(--mat-primary-color-dark);
+          }
+
+          :host([outlined]:not([text])) button,
+          :host([outlined]:not([raised])) button {
+            background-color: transparent;
+            color: var(--nn-button-color, var(--mat-primary-color));
+            fill: var(--nn-button-color, var(--mat-primary-color));
+            border: var(--nn-button-border, var(--mat-theme-border));
+          }
+
+          :host([outlined]:not([text])) button:hover,
+          :host([outlined]:not([raised])) button:hover {
+            background-color: var(--mat-primary-color-light);
+            color: var(--mat-primary-color-dark);
+            fill: var(--mat-primary-color-dark);
+          }
+
+          :host([raised]:not([text])) button,
+          :host([raised]:not([outlined])) button {
+            box-shadow: var(--mat-theme-box-shadow3);
+            transition: box-shadow 0.2s ease-out;
+          }
+
+          :host([raised]:not([text])) button:active,
+          :host([raised]:not([outlined])) button:active {
+            box-shadow: none;
+            transition: box-shadow 0.2s ease-out;
+            filter: brightness(90%);
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const NnForm = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputCheckBox = (base) => {
+      return class Base extends base {
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+          this.label = '';
+        }
+
+        firstUpdated () {
+          if (super.firstUpdated) super.firstUpdated();
+          this.shadowRoot.querySelector('label').addEventListener('click', (e) => { e.stopPropagation(); });
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.errorMessage,
+            super.stylePatterns.hideNativeWidget,
+            super.stylePatterns.requiredLabelAsterisk,
+            super.lit.css`
+          :host {
+            display: block;
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          :host::after:not(:disabled) {
+            content: '';
+            user-select: none;
+            position: absolute;
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            left: 5px;
+            top: 5px;
+            will-change: transform;
+            z-index: 0;
+          }
+
+          :host(:hover:not(:disabled))::after {
+            background: var(--mat-primary-color);
+            opacity: 0.1;
+            transform: scale(4);
+            transition: all 0.3s ease-in-out;
+          }
+
+          :host([has-focus])::after {
+            background: var(--mat-primary-color);
+            opacity: 0.4 !important;
+            transform: scale(4);
+            transition: all 0.3s ease-in-out;
+          }
+
+          div#label-text {
+            padding: var(----nn-checkbox-label-padding);
+          }
+
+          #native:invalid + label, #native:invalid ~ label {
+            background-color: none;
+            --mat-label-color: darkred;
+          }
+
+          label::before { /* Background box */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 15px;
+            width: 15px;
+            border: 2px solid var(--mat-boundaries-color);
+            border-radius: 3px;
+            transition: background-color 0.3s ease-in-out;
+            z-index: 1;
+          }
+
+          #native:checked ~ label::before {
+            border-color: var(--mat-primary-color);
+            background-color:  var(--mat-primary-color);
+            transition: background-color 0.3s ease-in-out;
+          }
+
+          :host(:hover:not(:disabled)) label::before {
+            filter: brightness(135%);
+            transition: filter 0.3s ease-in-out;
+            box-shadow: var(--mat-theme-box-shadow2);
+          }
+
+          #native:focus ~ label::before {
+            box-shadow: var(--mat-theme-box-shadow2);
+            border-color: var(--mat-primary-color);
+            filter: brightness(135%);
+          }
+
+          #native:not([checked]):hover:not(:disabled) ~ label::before {
+            filter: brightness(150%);
+            background-color: var(--mat-primary-color);
+            transition: background-color 0.3s ease-in-out;
+          }
+
+          label::after { /* Checkmark */
+            content: "";
+            position: absolute;
+            opacity: 0;
+            will-change: transform, opacity;
+            transition: opacity 0.3s ease-out;
+            z-index: 2;
+          }
+
+          #native:checked ~ label::after {
+            display: block;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            opacity: 1;
+            border: solid white;
+            border-radius: 2px;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(405deg);
+            -ms-transform: rotate(405deg);
+            transform: rotate(405deg);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in;
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputColor = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.hoverStyle,
+            super.stylePatterns.focusStyle,
+            super.lit.css`
+         :host {
+            position: relative;
+            padding: 0 12px;
+            padding-bottom: 16px;
+            margin: 10px;
+          }
+
+          #native {
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            box-sizing: border-box;
+            display: block;
+            border-radius: var(--mat-input-border-radius, 4px 4px 0 0);
+            border-width: 0;
+            border-style: none;
+            border-color: transparent;
+            background-color: var(--mat-background, #eee);
+            padding: 6px;
+            height: 40px;
+            box-shadow: var(--mat-theme-box-shadow);
+            transition: background-color 0.3s ease-in-out,
+                        color 0.3s ease-in-out,
+                        box-shadow 0.3s ease-in-out;
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputDatalist = (base) => {
+      return class Base extends AddHasValueAttributeMixin(base) {
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+        }
+
+        connectedCallback () {
+          super.connectedCallback();
+          this.onclick = () => { this.native.click(); };
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.stylePatterns.inputLabel,
+            super.stylePatterns.floatingLabel,
+            super.lit.css`
+          :host::after {
+            position: absolute;
+            content: '';
+            border: 4px solid transparent;
+            border-top-color: var(--mat-boundaries-color);
+            right: 20px;
+            bottom: 50%;
+            user-select: none;
+          }
+
+          #native {
+            width: 100%;
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputDate = (base) => {
+      return class Base extends base {
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.stylePatterns.inputLabel,
+            super.stylePatterns.fixedLabel,
+            super.stylePatterns.errorMessage
+          ]
+        }
+      }
+    };
+
+    const NnInputDateTimeLocal = (base) => {
+      return class Base extends base {
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.stylePatterns.inputLabel,
+            super.stylePatterns.fixedLabel,
+            super.stylePatterns.errorMessage
+          ]
+        }
+      }
+    };
+
+    const NnInputEmail = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputFile = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputMonth = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputNumber = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputPassword = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputRadio = (base) => {
+      return class Base extends base {
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+          this.label = '';
+        }
+
+        firstUpdated () {
+          if (super.firstUpdated) super.firstUpdated();
+          this.shadowRoot.querySelector('label').addEventListener('click', (e) => { e.preventDefault(); });
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.errorMessage,
+            super.stylePatterns.hideNativeWidget,
+            super.stylePatterns.requiredLabelAsterisk,
+            super.lit.css`
+          :host {
+            display: block;
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          :host::after {
+            content: '';
+            user-select: none;
+            position: absolute;
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            left: 5px;
+            top: 5px;
+            will-change: transform;
+            z-index: 0;
+          }
+
+          :host(:hover)::after {
+            background: var(--mat-primary-color);
+            opacity: 0.1;
+            transform: scale(4);
+            transition: all 0.3s ease-in-out;
+          }
+
+          :host([has-focus])::after {
+            background: var(--mat-primary-color);
+            opacity: 0.3;
+            transform: scale(4);
+            transition: all 0.3s ease-in-out;
+          }
+
+          div#label-text {
+            padding-left: 16px;
+          }
+
+          #native:invalid {
+            background-color: var(--mat-error-color);
+            color: var(--mat-error-text);
+            border-color: var(--mat-error-text);
+          }
+
+          :invalid {
+            border: unset;
+            border-bottom: var(--mat-input-border, var(--mat-theme-border));
+          }
+
+          #native:invalid + label, #native:invalid ~ label {
+            background-color: none;
+            --mat-label-color: darkred;
+          }
+
+          label::before { /* Background box */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 15px;
+            width: 15px;
+            border: 2px solid var(--mat-boundaries-color);
+            border-radius: 50%;
+            transition: background-color 0.3s ease-in-out;
+            z-index: 1;
+          }
+
+          #native:checked ~ label::before {
+            border-color: var(--mat-primary-color);
+            background-color: transparent;
+            transition: background-color 0.3s ease-in-out;
+          }
+
+          #native:hover ~ label::before {
+            filter: brightness(115%);
+            transition: filter 0.3s ease-in-out;
+          }
+
+          #native:focus ~ label::before {
+            box-shadow: var(--mat-theme-box-shadow2);
+            border-color: var(--mat-primary-color);
+            filter: brightness(115%);
+          }
+
+          #native:not([checked]):hover ~ label::before {
+            filter: brightness(130%);
+            transition: background-color 0.3s ease-in-out;
+          }
+
+          label::after { /* Checkmark */
+            content: "";
+            position: absolute;
+            opacity: 0;
+            width: 19px;
+            height: 19px;
+            will-change: transform, opacity;
+            transition: opacity 0.3s ease-out;
+            z-index: 2;
+          }
+
+          #native:checked ~ label::after {
+            display: block;
+            left: 0;
+            top: 0;
+            opacity: 1;
+            background-color:  var(--mat-primary-color);
+            border-radius: 50%;
+            -webkit-transform: scale(0.5);
+            -ms-transform: scale(0.5);
+            transform: scale(0.5);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in;
+          }
+
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputRange = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputSearch = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputSubmit = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputTel = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputTime = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputUrl = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnInputWeek = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnMeter = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnProgress = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const NnSelect = (base) => {
+      return class Base extends AddHasValueAttributeMixin(base) {
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+        }
+
+        connectedCallback () {
+          super.connectedCallback();
+          this.onclick = () => { this.native.click(); };
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.stylePatterns.inputLabel,
+            super.stylePatterns.floatingLabel,
+            super.lit.css`
+          :host::after {
+            position: absolute;
+            content: '';
+            border: 4px solid transparent;
+            border-top-color: var(--mat-boundaries-color);
+            right: 20px;
+            bottom: 50%;
+            user-select: none;
+          }
+
+          #native {
+            width: 100%;
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const NnTextArea = (base) => {
+      return class Base extends AddHasValueAttributeMixin(base) {
+        // Style depends on CSS being able to find label as sibling of the #native element.
+        // CSS can select next siblings, but not previous.  This guarantees label is rendered after #native in the shadowDOM
+        static get properties () {
+          return {
+            labelPosition: { type: String, attribute: false },
+            validationMessage: { type: String, attribute: false }
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'after';
+          this.validationMessagePosition = 'after';
+        }
+
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.stylePatterns.inputLabel,
+            super.stylePatterns.floatingLabel,
+            super.stylePatterns.errorMessage,
+            super.lit.css`
+          :host {
+            --mat-form-element-height: 80px;
+          }
+          /* Following material design guidelines, non-resizeable textarea */
+          textarea#native {
+            font-family: var(--mat-font-family);
+            padding-top: 12px;
+            min-height: 80px;
+            height: unset;
+            padding-top: 30px;
+            width: -webkit-fill-available;
+          }
+        `
+          ]
+        }
+      }
+    };
+
+    const EeAutocomplete = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    const EeAutocompleteInputSpans = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles,
+            super.stylePatterns.inputField,
+            super.lit.css`
+        `
+          ]
+        }
+      }
+    };
+
+    window.TP_THEME = {
+      common: Common,
+
+      'ee-drawer': EeDrawer,
+      'ee-network': EeNetwork,
+      'ee-snack-bar': EeSnackBar,
+      'ee-tabs': EeTabs,
+      'ee-fab': EeFab,
+      'ee-autocomplete': EeAutocomplete,
+      'ee-autocomplete-input-spans': EeAutocompleteInputSpans,
+
+      'ee-toolbar': EeToolbar,
+      'ee-header': EeHeader,
+
+      'en-form': EnForm,
+      'en-input-Range': EnInputRange,
+
+      'nn-button': NnButton,
+      'nn-form': NnForm,
+      'nn-input-button': NnInputButton,
+      'nn-input-checkbox': NnInputCheckBox,
+      'nn-input-color': NnInputColor,
+      'nn-input-datalist': NnInputDatalist,
+      'nn-input-date': NnInputDate,
+      'nn-input-date-time-local': NnInputDateTimeLocal,
+      'nn-input-email': NnInputEmail,
+      'nn-input-file': NnInputFile,
+      'nn-input-month': NnInputMonth,
+      'nn-input-number': NnInputNumber,
+      'nn-input-password': NnInputPassword,
+      'nn-input-radio': NnInputRadio,
+      'nn-input-range': NnInputRange,
+      'nn-input-search': NnInputSearch,
+      'nn-input-submit': NnInputSubmit,
+      'nn-input-tel': NnInputTel,
+      'nn-input-text': NnInputText,
+      'nn-input-time': NnInputTime,
+      'nn-input-url': NnInputUrl,
+      'nn-input-week': NnInputWeek,
+      'nn-meter': NnMeter,
+      'nn-progress': NnProgress,
+      'nn-select': NnSelect,
+      'nn-textarea': NnTextArea
+    };
+
+    const LabelsMixin = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return [
+            super.styles || [],
+            css`
+          label div#label-text, ::slotted(*) {
+            align-self: center;
+            width: var(--labels-mixin-input-label-width, auto);
+          }
+
+        `
+          ]
+        }
+
+        static get properties () {
+          return {
+            label: { type: String },
+            labelPosition: {
+              type: String,
+              attribute: 'label-position'
+            },
+            labelForElement: {
+              type: String,
+              attribute: 'false'
+            }
+
+          }
+        }
+
+        constructor () {
+          super();
+          this.labelPosition = 'before';
+          this.labelForElement = 'native';
+        }
+
+        get labelTemplate () {
+          return html`
+        <label id="label" for="${this.labelForElement}">
+          <div id="label-text">${this.label}</div>
+          <slot id="label-slot" name="label"></slot>
+        </label>
+      `
+        }
+
+        get ifLabelBefore () {
+          if (this.labelPosition === 'after') return ''
+          return this.labelTemplate
+        }
+
+        get ifLabelAfter () {
+          if (this.labelPosition === 'before') return ''
+          return this.labelTemplate
+        }
+      }
+    };
+
+    const SyntheticValidatorMixin = (base) => {
+      return class Base extends base {
+        static get properties () {
+          return {
+            validationMessagePosition: {
+              type: String,
+              attribute: 'validation-message-position'
+            },
+            shownValidationMessage: {
+              type: String,
+              attribute: false
+            },
+            validity: {
+              type: Object,
+              attribute: false
+            },
+            validator: { type: Function }
+          }
+        }
+
+        constructor () {
+          super();
+          this.shownValidationMessage = '';
+          this.validator = () => '';
+          this.validationMessagePosition = 'before';
+          this.validity = { valid: true, _customValidationMessage: '' };
+        }
+
+        setCustomValidity (m) {
+          if (m === '') {
+            this.validity = {
+              valid: true,
+              _customValidationMessage: ''
+            };
+            this.toggleAttribute('valid', true);
+            if (m === '') this.shownValidationMessage = '';
+          } else {
+            this.validity = {
+              valid: false,
+              customError: true,
+              _customValidationMessage: m
+            };
+            this.toggleAttribute('valid', false);
+          }
+        }
+
+        reportValidity () {
+          // Run custom validator. Note that custom validator
+          // will only ever run on filed without an existing customError.
+          if (!this.validity.customError) {
+            const ownErrorMessage = this.validator();
+            if (ownErrorMessage) this.setCustomValidity(ownErrorMessage);
+          }
+
+          // Hide the error message by default
+          this.shownValidationMessage = '';
+
+          if (!this.validity.valid) {
+            this.toggleAttribute('valid', false);
+            this.shownValidationMessage = this.validity._customValidationMessage;
+            this.dispatchEvent(new CustomEvent('invalid', {
+              cancelable: true,
+              bubbles: false,
+              composed: true
+            }));
+            return false
+          } else {
+            this.toggleAttribute('valid', true);
+            return true
+          }
+        }
+
+        checkValidity () {
+          if (!this.validity.customError) {
+            const ownErrorMessage = this.validator();
+            if (ownErrorMessage) this.setCustomValidity(ownErrorMessage);
+          }
+
+          if (!this.validity.valid) {
+            this.dispatchEvent(new CustomEvent('invalid', {
+              cancelable: true,
+              bubbles: false,
+              composed: true
+            }));
+            return false
+          }
+          return true
+        }
+
+        get ifValidationMessageBefore () {
+          if (this.validationMessagePosition === 'after') return ''
+          return this.validationMessageTemplate
+        }
+
+        get ifValidationMessageAfter () {
+          if (this.validationMessagePosition === 'before') return ''
+          return this.validationMessageTemplate
+        }
+
+        get validationMessageTemplate () {
+          return html`
+        <span class="error-message">
+          ${this.shownValidationMessage}
+        </span>
+      `
+        }
+      }
+    };
+
+    const StyleableMixin = (base) => {
+      return class Base extends base {
+        static get styles () {
+          return []
+        }
+
+        firstUpdated () {
+          super.firstUpdated();
+
+          // Add the equivalent of
+          // <slot name="style" id="style-slot"></slot>
+          // To the shadow DOM
+          const styleSlot = document.createElement('slot');
+          styleSlot.setAttribute('name', 'style');
+          styleSlot.setAttribute('id', 'style-slot');
+          this.shadowRoot.appendChild(styleSlot);
+
+          // If an element has one or more <any-tag slot="style"> in its
+          // light DOM, the newly added styleSlot will have
+          // them  as an assigned element.
+          // Clone over all of the ones where any-tag is `style`.
+          // So, any <style slot="style"> will be cloned over
+          for (const styleElement of styleSlot.assignedElements()) {
+            if (styleElement.tagName === 'STYLE') {
+              this.shadowRoot.appendChild(styleElement);
+            }
+          }
+        }
+      }
+    };
+
+    const ThemeableMixin = (path) => (base) => {
+      const common = (window.TP_THEME && window.TP_THEME.common) || (p => p);
+      const theme = (window.TP_THEME && window.TP_THEME[path]) || (p => p);
+      return theme(common(LitBits(base)))
+    };
+
+    const LitBits = (base) => {
+      return class Base extends base {
+        static get lit () {
+          return {
+            LitElement,
+            css
+          }
+        }
+      }
+    };
+
+    class EeAutocompleteInputSpans$1 extends ThemeableMixin('ee-autocomplete-input-spans')(SyntheticValidatorMixin(StyleableMixin(LabelsMixin(LitElement)))) {
+      static get properties () {
+        return {
+          name: {
+            type: String
+          },
+          valueAs: {
+            type: String,
+            attribute: 'value-as'
+          },
+          valueSeparator: {
+            type: String,
+            attribute: 'value-separator'
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.labelForElement = 'ni';
+        this.valueAs = 'text'; // can be text, ids, json
+        this.removeIcon = '<svg class="icon" height="15" viewBox="0 0 24 24" width="15"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>';
+        this.itemElement = '';
+        this.itemElementConfig = {};
+        this.itemElementAttributes = {};
+        this.valueSeparator = ',';
+      }
+
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: inline;
+        }
+        :host(:focus) {
+          outline: none;
+        }
+
+        #list > span {
+          position: relative;
+          display: inline-block;
+        }
+
+        #list > span > *:not(button) {
+          position: relative;
+          display: inline-block;
+          padding: 3px 6px;
+          padding-right: 24px;
+          border: 1px solid #ddd;
+          border-radius: 1em;
+          margin: 2px;
+          vertical-align: middle;
+          line-height: 1em;
+        }
+
+        #list > span > *:not(button)[invalid] {
+          background-color: pink;
+          border-color: red;
+        }
+
+        #list > span:active > *:not(button), #list > span:focus > *:not(button), #list > span:hover > *:not(button) {
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+          background-color: #eee;
+          outline: none;
+        }
+        #list > span:active > *:not(button), #list > span:focus > *:not(button) {
+          border-color: #ccc;
+        }
+
+        #list > span button.remove {
+          appearance: none;
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          fill: #999;
+          border: none;
+          padding: 0;
+          display: inline-block;
+          position: absolute;
+          top: 55%;
+          right: 4px;
+          transform: translateY(-50%);
+          background: none;
+          z-index:0;
+        }
+
+        #list > *:focus, #list > span *:active {
+          outline: none;
+        }
+
+        #list > span button.remove svg {
+          z-index: -1;
+        }
+
+        #list > span button.remove:hover {
+          fill: #555;
+        }
+
+        input {
+          box-sizing: border-box;
+          display: inline-block;
+          outline: none;
+          vertical-align: middle;
+          height: 1.5em;
+          border: none;
+          font-size: 0.9em;
+          width: 120px;
+        }
+
+        input:focus, input:hover {
+          outline: none
+        }
+
+        span.error-message {
+          color: red;
+        }
+
+        :invalid {
+          background-color: pink;
+          border: 1px solid #bb7777;
+        }
+      `
+        ]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <div id="list" @click="${this._listClicked}">
+        <input @keydown="${this._handleKeyEvents}" @input="${this._inputReceived}" rows="1" id="ta" spellcheck="false" autocomplete="false" autocapitalize="off" autocorrect="off" dir="ltr" role="combobox" aria-autocomplete="list">
+      </div>
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+      <input id="ni" type="hidden" name="${this.name}">
+    `
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+        this.addEventListener('click', this.focus);
+      }
+
+      disconnectedCallback () {
+        super.connectedCallback();
+        this.removeEventListener('click', this.focus);
+      }
+
+      firstUpdated () {
+        this._updateNativeInputValue();
+      }
+
+      focus () {
+        this.shadowRoot.querySelector('#ta').focus();
+      }
+
+      _listClicked (e) {
+        e.stopPropagation();
+      }
+
+      get value () {
+        let r;
+        let list;
+        switch (this.valueAs) {
+        case 'json':
+          r = {};
+          list = this.shadowRoot.querySelector('#list');
+          for (const span of list.children) {
+            if (span.id === 'ta') continue
+            const idValue = span.firstChild.idValue;
+            r[idValue] = span.firstChild.data;
+          }
+          return r
+        default:
+          r = [];
+          list = this.shadowRoot.querySelector('#list');
+          for (const span of list.children) {
+            if (span.id === 'ta') continue
+            if (this.valueAs === 'text') {
+              // Won't push invalid spans to the final value
+              if (span.getAttribute('invalid') === null) r.push(span.firstChild.textValue);
+            } else {
+              r.push(span.firstChild.idValue);
+            }
+          }
+          return r.join(this.valueSeparator)
+        }
+      }
+
+      set value (v) {
+        const list = this.shadowRoot.querySelector('#list');
+
+        // Remove all children
+        while (list.firstChild) {
+          if (list.firstChild.id === 'ta') break
+          list.removeChild(list.firstChild);
+        }
+
+        // Assign all children using pickedElement
+        if (Array.isArray(v)) {
+          for (const o of v) {
+            this.pickedElement(o, false, true);
+          }
+        } else if (typeof v === 'object' && v !== null) {
+          for (const k of Object.keys(v)) {
+            const $o = v[k];
+            this.pickedElement($o, false, true);
+          }
+        } else if (typeof v === 'string') {
+          for (const s of v.split(this.valueSeparator)) {
+            this.pickedElement(s, false, true);
+          }
+        }
+        // Sets the native input
+        this._updateNativeInputValue();
+
+        // Rerun validator
+        this.setCustomValidity('');
+        this.reportValidity();
+      }
+
+      get validationMessage () {
+        return this.validity._customValidationMessage
+      }
+
+      get autocompleteValue () {
+        const ta = this.shadowRoot.querySelector('#ta');
+        if (ta) return ta.value
+        return ''
+      }
+
+      /* END OF CONSTRAINTS API */
+
+      // Run this when there are no suggestions and the user hits Tab or Enter in #ta
+      // This will run pickElement with a STRING, which will get the element to
+      // work out a data structure based on the string
+      _pickCurrentValue () {
+        if (this.valueAs === 'text') {
+          this.pickedElement(this.shadowRoot.querySelector('#ta').value, true);
+        }
+      }
+
+      _askToRemove (e) {
+        const target = e.currentTarget;
+        this._removeItem(target.parentElement.parentElement);
+      }
+
+      _updateNativeInputValue () {
+        const ni = this.shadowRoot.querySelector('#ni');
+        ni.value = this.value;
+      }
+
+      _removeItem (target, which = 'previous') {
+        // Focus previous item before deleting target. If it's the first/only, select the input
+        const previous = target.previousElementSibling || target.nextElementSibling;
+        previous.focus();
+        target.remove();
+        this._updateNativeInputValue();
+        // Rerun validator
+        this.setCustomValidity('');
+        this.reportValidity();
+      }
+
+      _createRemoveBtn () {
+        const el = document.createElement('button');
+        el.innerHTML = this.removeIcon;
+        el.onclick = this._askToRemove.bind(this);
+        el.classList.add('remove');
+        return el
+      }
+
+      _handleKeyEvents (e) {
+        const target = e.currentTarget;
+
+        switch (e.key) {
+        case 'ArrowLeft':
+          if (target.previousElementSibling) {
+            e.preventDefault();
+            target.previousElementSibling.focus();
+          }
+          break
+
+        case 'ArrowRight':
+          if (target.id !== 'ta') {
+            e.preventDefault();
+            target.nextElementSibling
+              ? target.nextElementSibling.focus()
+              : target.parentElement.firstElementChild.focus();
+          }
+          break
+
+        case 'ArrowDown':
+          if (this.parentElement.suggestions.length) {
+            e.preventDefault();
+            this.parentElement.focusNext();
+          }
+          break
+        case 'Backspace':
+        case 'Delete':
+          if (target.id === 'ta' && target.parentElement.children.length > 1 && !target.value) {
+            this._removeItem(target.previousElementSibling);
+          } else if (target.id !== 'ta') {
+            this._removeItem(target);
+          }
+          break
+        case 'Tab':
+        case 'Enter':
+          if (!this.autocompleteValue) break
+          if (!this.parentElement.suggestions.length) {
+            e.preventDefault();
+            this._pickCurrentValue();
+          } else {
+            e.preventDefault();
+            this.parentElement.pickFirst();
+          }
+        }
+      }
+
+      /* API */
+      get multiInputApi () { return true }
+
+      pickedElement (data, force = false, skipValidation = false) {
+        const parentEl = document.createElement(this.itemElement);
+        const el = new parentEl.constructor.PickedElement();
+
+        el.config = { ...el.config, ...this.itemElementConfig };
+        for (const k of Object.keys(this.itemElementAttributes)) el.setAttribute(k, this.itemElementAttributes[k]);
+
+        // Convert string into data if necessary
+        if (typeof data === 'string') {
+          if (!data.length) return
+          data = parentEl.stringToData(data);
+          if (!data.valid) {
+            el.toggleAttribute('invalid', true);
+            if (!force) return
+          }
+        }
+        el.data = data;
+
+        const list = this.shadowRoot.querySelector('#list');
+        const span = document.createElement('span');
+        // -1 means that it will not in the list of tabs, but
+        // it will be focusable (spans aren't by default)
+        span.setAttribute('tabindex', -1);
+        const ta = this.shadowRoot.querySelector('#ta');
+        const removeBtn = this._createRemoveBtn();
+
+        span.onkeydown = this._handleKeyEvents.bind(this);
+        // Span will be not in the list of tabs
+        // Necessary since this is a button and it IS
+        // in tab list by default
+        removeBtn.setAttribute('tabindex', -1);
+        span.appendChild(el);
+        el.appendChild(removeBtn);
+
+        list.insertBefore(span, ta);
+        ta.value = '';
+
+        this._updateNativeInputValue();
+
+        // Rerun validator
+        if (!skipValidation) {
+          this.setCustomValidity('');
+          this.reportValidity();
+        }
+      }
+
+      get textInputValue () {
+        const targetElementTextArea = this.shadowRoot.querySelector('#ta');
+        return targetElementTextArea
+          ? targetElementTextArea.value
+          : ''
+      }
+
+      setPickedElement (itemElement, itemElementConfig, itemElementAttributes) {
+        this.itemElement = itemElement;
+        this.itemElementConfig = itemElementConfig;
+        this.itemElementAttributes = itemElementAttributes;
+      }
+    }
+
+    window.customElements.define('ee-autocomplete-input-spans', EeAutocompleteInputSpans$1);
+
+    class EeAutocompleteItemCountry extends ThemeableMixin('ee-autocomplete-item-country')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+        }
+
+        :host(:last-child) {
+          border-bottom: unset;
+        }
+
+        :host(:hover) {
+          background-color: #eee;
+        }
+
+        li {
+          list-style: none;
+        }
+
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          data: {
+            type: Object,
+            attribute: false
+          },
+          config: {
+            type: Object,
+            attribute: false
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.config = {
+          id: 'id',
+          countryName: 'name',
+          countryCapital: 'capital'
+        };
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+    <li>${this.data[this.config.countryName]} (Capital: ${this.data[this.config.countryCapital]})</li>
+    `
+      }
+
+      /* API */
+
+      get idValue () {
+        return this.data[this.config.id]
+      }
+
+      get textValue () {
+        return this.data[this.config.countryName]
+      }
+
+      stringToData (string) {
+        return {
+          [this.config.countryName]: string,
+          valid: true
+        }
+      }
+
+      static get PickedElement () {
+        return EeAutocompleteItemCountryView
+      }
+    }
+    customElements.define('ee-autocomplete-item-country', EeAutocompleteItemCountry);
+
+    class EeAutocompleteItemCountryView extends ThemeableMixin('ee-autocomplete-item-country-view')(EeAutocompleteItemCountry) {
+      static get styles () {
+        return [
+          css`
+        :host {
+          position: relative;
+          display: inline-block;
+          font-size: 0.9em;
+        }
+      `
+        ]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.data[this.config.countryName]}
+      <slot></slot>
+    `
+      }
+    }
+    customElements.define('ee-autocomplete-item-country-view', EeAutocompleteItemCountryView);
+
+    class EeAutocompleteItemEmail extends ThemeableMixin('ee-autocomplete-item-email')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+        }
+
+        :host(:last-child) {
+          border-bottom: unset;
+        }
+
+        :host(:hover) {
+          background-color: #eee;
+        }
+
+        li {
+          list-style: none;
+        }
+
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          data: {
+            type: Object,
+            attribute: false
+          },
+          config: {
+            type: Object,
+            attribute: false
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.config = {
+          id: 'id',
+          emailName: 'name',
+          emailAddress: 'email'
+        };
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+    <li>${this.textValue}</li>
+    `
+      }
+
+      /* API */
+      get idValue () {
+        return this.data[this.config.id]
+      }
+
+      get textValue () {
+        return this._textValueGetter()
+      }
+
+      _textValueGetter (short = false) {
+        if (short) return this.data[this.config.emailName] || this.data[this.config.emailAddress]
+        const name = this.data[this.config.emailName];
+        const address = this.data[this.config.emailAddress];
+        if (name && address) return `${name} <${address}>`
+        else if (name) return name
+        else if (address) return address
+        else return ''
+      }
+
+      stringToData (string) {
+        let emailName;
+        let emailAddress;
+
+        if (!string.match('@')) {
+          return {
+            [this.config.emailName]: string,
+            [this.config.emailAddress]: '',
+            valid: false
+          }
+        }
+
+        const emails = string.match(/[^@<\s]+@[^@\s>]+/g);
+        if (emails) {
+          emailAddress = emails[0];
+        }
+
+        const names = string.split(/\s+/);
+
+        if (names.length > 1) {
+          names.pop();
+          emailName = names.join(' ').replace(/"/g, '');
+        }
+
+        const valid = !!emailAddress;
+
+        return {
+          [this.config.emailName]: emailName,
+          [this.config.emailAddress]: emailAddress,
+          valid: valid
+        }
+      }
+
+      static get PickedElement () {
+        return EeAutocompleteItemEmailView
+      }
+    }
+    customElements.define('ee-autocomplete-item-email', EeAutocompleteItemEmail);
+
+    class EeAutocompleteItemEmailView extends ThemeableMixin('ee-autocomplete-item-email-view')(EeAutocompleteItemEmail) {
+      static get styles () {
+        return [
+          css`
+        :host {
+          position: relative;
+          display: inline-block;
+          font-size: 0.9em;
+        }
+      `
+        ]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this._textValueGetter(true)}
+      <slot></slot>
+    `
+      }
+    }
+    customElements.define('ee-autocomplete-item-email-view', EeAutocompleteItemEmailView);
+
+    class EeAutocompleteItemLi extends ThemeableMixin('ee-autocomplete-item-li')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+        }
+
+        :host(:last-child) {
+          border-bottom: unset;
+        }
+
+        :host(:hover) {
+          background-color: #eee;
+        }
+
+        li {
+          list-style: none;
+        }
+
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          data: {
+            type: Object,
+            attribute: false
+          },
+          config: {
+            type: Object,
+            attribute: false
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.config = {
+          id: 'id',
+          path: 'name'
+        };
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+    <li>${this.data[this.config.path]}</li>
+    `
+      }
+
+      /* API */
+
+      get idValue () {
+        return this.data[this.config.id]
+      }
+
+      get textValue () {
+        return this.data[this.config.path]
+      }
+
+      stringToData (string) {
+        return {
+          [this.config.path]: string
+        }
+      }
+
+      static get PickedElement () {
+        return EeAutocompleteItemLiView
+      }
+    }
+    customElements.define('ee-autocomplete-item-li', EeAutocompleteItemLi);
+
+    class EeAutocompleteItemLiView extends ThemeableMixin('ee-autocomplete-item-li-view')(EeAutocompleteItemLi) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: inline-block;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          data: {
+            type: Object,
+            attribute: false
+          },
+          config: {
+            type: Object,
+            attribute: false
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.config = {
+          id: 'id',
+          path: 'name'
+        };
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      -${this.data[this.config.path]}-
+    `
+      }
+    }
+    customElements.define('ee-autocomplete-item-li-view', EeAutocompleteItemLiView);
+
+    class EeAutocomplete$1 extends ThemeableMixin('ee-autocomplete')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          position: relative;
+        }
+
+        #suggestions {
+          box-sizing: border-box;
+          background-color: white;
+          position: absolute;
+          z-index: 1000;
+          max-height: 480px;
+          overflow-y: scroll;
+          top: 90%;
+          box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.2), 0 0 2px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        #suggestions[populated] {
+          width: 100%;
+          padding: 10px;
+        }
+
+        #suggestions > *[selected], #suggestions > *:focus, #suggestions > *:hover  {
+          background-color: #eee;
+        }
+
+        [hidden] {
+          display: none !important;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          url: {
+            type: String
+          },
+          informational: {
+            type: Boolean
+          },
+          target: {
+            type: String
+          },
+          targetForId: {
+            type: String,
+            attribute: 'target-for-id'
+          },
+          picked: {
+            type: Boolean,
+            reflect: true
+          },
+          suggestions: {
+            type: Array,
+            attribute: false
+          },
+          itemElement: {
+            type: String,
+            attribute: 'item-element'
+          },
+          itemElementConfig: {
+            type: Object,
+            attribute: 'item-element-config'
+          },
+          itemElementAttributes: {
+            type: Object,
+            attribute: 'item-element-attributes'
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.url = '';
+        this.target = null;
+        this.targetForId = null;
+        this.suggestions = [];
+        this.itemElement = 'ee-autocomplete-item-li';
+        this.itemElementConfig = {};
+        this.itemElementAttributes = {};
+
+        this._boundInputEvent = this._inputEvent.bind(this);
+        this._boundKeydownEvent = this._keydownEvent.bind(this);
+      }
+
+      // If if's not set, return the first child
+      // If it's set:
+      //   If it's a string, return the #element
+      //   If it's an object, return it directly (assumption that it's an element)
+      _findTarget (target) {
+        if (target !== null) {
+          if (typeof target === 'string') return this.querySelector(`#${target}`)
+          else if (typeof target === 'object') return target
+        } else {
+          return this.children[0]
+        }
+        return null
+      }
+
+      // If if's not set, don't do anything
+      // If it's set:
+      //   If it's an empty string, look for the first [name] element without no-submit,
+      //   If it's a string, return the #element
+      //   If it's an object, return it  directly (assumption that it's an element)
+      _findTargetForId (target) {
+        if (target !== 'null') {
+          if (typeof target === 'string') {
+            return target === ''
+              ? this.querySelector('[name]:not([no-submit])')
+              : this.querySelector(`#${target}`)
+          } else if (typeof target === 'object') return target
+        }
+        return null
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+
+        this.targetElement = this._findTarget(this.target);
+        this.targetForId = this._findTargetForId(this.targetForId);
+
+        // The target for Id is the true source of the value
+        // in case of ID submission. So, two things must happen:
+        // 1) If it has a value already (it might have been set by a data load before the autocomplete), then picked is true
+        // 2) Its value needs to be observed, so that if a value is set at any point, picked becomes true
+        if (this.targetForId) {
+          this.picked = !!this.targetForId.getAttribute('value');
+
+          const thisObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                this.picked = !!this.targetForId.getAttribute('value');
+              }
+            });
+          });
+          thisObserver.observe(this.targetForId, { attributes: true });
+        }
+
+        if (!this.targetElement) {
+          console.error('Target element not found');
+          return
+        }
+
+        this.targetElement.addEventListener('input', this._boundInputEvent);
+        this.targetElement.addEventListener('keydown', this._boundKeydownEvent);
+
+        // API USE: If the target input element implements multiInputApi,
+        // then set the basic parameters for all
+        // picked items (element name, config and attributes)
+        if (this.targetElement.multiInputApi) {
+          this.targetElement.setPickedElement(this.itemElement, this.itemElementConfig, this.itemElementAttributes);
+        }
+
+        // Setup ARIA attributes on target
+        this.targetElement.setAttribute('aria-autocomplete', 'list');
+        this.targetElement.setAttribute('aria-controls', 'suggestions');
+        this.targetElement.toggleAttribute('aria-activedescendant', true);
+        // Setup ARIA attributes on ee-autocomplete
+        this.setAttribute('role', 'combobox');
+        this.setAttribute('aria-owns', 'suggestions');
+      }
+
+      disconnectedCallback () {
+        if (!this.targetElement) return
+
+        this.targetElement.removeEventListener('input', this._boundInputEvent);
+        this.targetElement.removeEventListener('keydown', this._boundKeydownEvent);
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <slot></slot>
+      <div @click="${this._picked}" id="suggestions" role="listbox" @keydown=${this._handleKeyEvents}></div>
+    `
+      }
+
+      _keydownEvent (e) {
+        switch (e.key) {
+        case 'Escape':
+          this._dismissSuggestions();
+          break
+        case 'KeyDown':
+          if (this.suggestions.length) {
+            const suggestionsDiv = this.shadowRoot.querySelector('#suggestions');
+            suggestionsDiv.firstChild.focus();
+          }
+        }
+      }
+
+      pickFirst () {
+        const suggestionsDiv = this.shadowRoot.querySelector('#suggestions');
+        suggestionsDiv.querySelector('[selected]').click();
+      }
+
+      focusNext () {
+        if (!this.suggestions.length) return
+        const suggestionsDiv = this.shadowRoot.querySelector('#suggestions');
+        let selected = suggestionsDiv.querySelector('[selected]') || suggestionsDiv.firstElementChild;
+        if (this.suggestions.length > 1) {
+          selected.toggleAttribute('selected', false);
+          selected = selected.nextElementSibling || selected.previousElementSibling;
+        }
+        if (selected) selected.focus();
+      }
+
+      _picked (e) {
+        if (this.informational || !this.targetElement) return
+
+        if (this.targetElement.multiInputApi) {
+          this.targetElement.pickedElement(e.target.data);
+        } else {
+          this.targetElement.value = e.target.textValue;
+          if (this.targetForId) {
+            this.targetForId.value = e.target.idValue;
+            this.picked = true;
+          }
+        }
+        this._dismissSuggestions();
+        this.targetElement.focus();
+
+        // Dispatch input event since input happened
+        const inputEvent = new CustomEvent('input', { composed: true, bubbles: true, cancelable: false, detail: { synthetic: true } });
+        this.targetElement.dispatchEvent(inputEvent);
+      }
+
+      async updated (cp) {
+        if (!cp.has('suggestions')) return
+
+        const suggestionsDiv = this.shadowRoot.querySelector('#suggestions');
+
+        while (suggestionsDiv.firstChild) { suggestionsDiv.removeChild(suggestionsDiv.firstChild); }
+
+        if (this._autocompleteInFlight) return
+
+        if (this.targetElement.multiInputApi) {
+          if (this.targetElement.textInputValue === '') {
+            suggestionsDiv.toggleAttribute('populated', false);
+            return
+          }
+        }
+
+        for (const suggestion of this.suggestions) {
+          const el = document.createElement(this.itemElement);
+          el.config = { ...el.config, ...this.itemElementConfig };
+          for (const k of Object.keys(this.itemElementAttributes)) el.setAttribute(k, this.itemElementAttributes[k]);
+          el.data = suggestion;
+          el.onkeydown = this._handleKeyEvents.bind(this);
+          // Make span focusable AND in the tab list
+          el.setAttribute('tabindex', 0);
+          suggestionsDiv.appendChild(el);
+        }
+
+        // Only 1 response and it's a plain text input? Autocomplete if text fully matches
+        // beginning of the only result
+        if (
+          this.suggestions.length === 1 &&
+          !this.targetElement.multiInputApi &&
+          typeof this.targetElement.setSelectionRange === 'function'
+        ) {
+          const firstOption = suggestionsDiv.firstChild;
+          const textValue = firstOption.textValue;
+          if (textValue.toUpperCase().startsWith(this.targetElement.value.toUpperCase())) {
+            const oldValue = this.targetElement.value;
+            this.targetElement.value = textValue;
+            this.targetElement.setSelectionRange(oldValue.length, textValue.length);
+            if (this.targetForId) {
+              this.targetForId.value = firstOption.idValue;
+              this.picked = true;
+            }
+          }
+        }
+
+        if (!this.suggestions.length) {
+          suggestionsDiv.toggleAttribute('populated', false);
+        }
+
+        if (this.suggestions.length) {
+          suggestionsDiv.toggleAttribute('populated', true);
+          suggestionsDiv.firstChild.toggleAttribute('selected', true);
+        }
+      }
+
+      _dismissSuggestions () {
+        const suggestionsDiv = this.shadowRoot.querySelector('#suggestions');
+        suggestionsDiv.toggleAttribute('populated', false);
+        this.suggestions = [];
+      }
+
+      _handleKeyEvents (e) {
+        const target = e.currentTarget;
+
+        if (!this.suggestions.length || !target.parentElement) return
+
+        switch (e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          target.previousElementSibling
+            ? target.previousElementSibling.focus()
+            : target.parentElement.lastElementChild.focus();
+          break
+        case 'ArrowDown':
+          e.preventDefault();
+          target.nextElementSibling
+            ? target.nextElementSibling.focus()
+            : target.parentElement.firstElementChild.focus();
+          break
+        case 'Tab':
+        case 'Enter':
+          this._picked(e);
+          e.preventDefault();
+          this.targetElement.focus();
+          break
+        case 'Escape':
+          this._dismissSuggestions();
+          this.targetElement.focus();
+          break
+        }
+      }
+
+      async _inputEvent (e) {
+        // This is a synthetic event triggered by autocomplete itself
+        // once a selection was made: ignore
+        if (e.detail && e.detail.synthetic) return
+
+        // Nothing can nor should happen without a target
+        const target = this.targetElement;
+        if (!target) return
+
+        // There is more input: a new query will be made,
+        // so the list is now stale
+        this._dismissSuggestions();
+
+        // If the target element is not valid, don't take off at all
+        // TAKEN OUT as autocomplete might be necessary to actually make
+        // it valid
+        // if (!target.validity.valid) {
+        //  this.suggestions = []
+        //  return
+        // }
+
+        // Check if it's inflight. If so, queue up an autocomplete
+        // with the same 'e'
+        if (this._autocompleteInFlight) {
+          this._attemptedAutocompleteFlight = e;
+          return
+        }
+        this._autocompleteInFlight = true;
+
+        if (this.targetForId) {
+          this.targetForId.value = '';
+          this.picked = false;
+        }
+
+        // Set the url, which will also depend on recordId
+        const value = target.autocompleteValue || target.value;
+        const url = this.url + value;
+
+        const fetchOptions = {
+          method: 'GET',
+          redirect: 'follow' // manual, *follow, error
+        };
+
+        // Attempt the submission
+        let networkError = false;
+        let response;
+        try {
+          response = await fetch(url, fetchOptions);
+        } catch (e) {
+          console.log('ERROR!', e);
+          networkError = true;
+        }
+
+        // CASE #1: network error.
+        if (networkError) {
+          console.log('Network error!');
+
+          // Emit event to make it possible to tell the user via UI about the problem
+          const event = new CustomEvent('autocomplete-error', { detail: { type: 'network' }, bubbles: true, composed: true });
+          this.dispatchEvent(event);
+
+        //
+        // CASE #2: HTTP error.
+        // Invalidate the problem fields
+        } else if (!response.ok) {
+          console.log('Fetch error!');
+
+          const errs = await response.json();
+          // Emit event to make it possible to tell the user via UI about the problem
+          const event = new CustomEvent('autocomplete-error', { detail: { type: 'http', response, errs }, bubbles: true, composed: true });
+          this.dispatchEvent(event);
+
+        // CASE #3: NO error. Set fields to their
+        // new values
+        } else {
+          // Convert the result to JSON
+          const v = await response.json();
+
+          // Emit event to make it possible to tell the user via UI about the problem
+          const event = new CustomEvent('form-ok', { detail: { response }, bubbles: true, composed: true });
+          this.dispatchEvent(event);
+
+          this.suggestions = v;
+        }
+
+        this._autocompleteInFlight = false;
+        if (this._attemptedAutocompleteFlight) {
+          const oldE = this._attemptedAutocompleteFlight;
+          this._attemptedAutocompleteFlight = false;
+          this._inputEvent(oldE);
+        }
+      }
+    }
+    customElements.define('ee-autocomplete', EeAutocomplete$1);
+
+    const close = html`<svg class="icon" height="24" viewBox="0 0 24 24" width="24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>`;
+
+    class EeDrawer$1 extends ThemeableMixin('ee-drawer')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          css`
+        :host {
+          display: block;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        }
+
+        :host([opened]) {
+          width: 100vw;
+          height: 100vh;
+        }
+
+        div.container {
+          height: 100vh;
+          position: fixed;
+          top: 0;
+          left: 0;
+          will-change: transform;
+          transform: translateX(-100%);
+          overflow-x: hidden;
+          transition: transform 0.3s ease-out;
+          background-color: var(--ee-drawer-background-color, #393939);
+        }
+
+        :host([opened]) div.container {
+          will-change: transform;
+          transform: translateX(0);
+        }
+
+        :host([modal][opened]) div.container {
+          box-shadow: var(--ee-drawer-shadow, 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.14), 0 0 0 100vw rgba(0, 0, 0, 0.15))
+        }
+
+        #close {
+          -webkit-appearance: none;
+          color: white;
+          fill: white;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          z-index: 10;
+          background: transparent;
+          border: none;
+        }
+
+        button#close:focus, button#close:active {
+            outline: none !important;
+          }
+
+        button#close:active {
+          filter: brightness(50%)
+        }
+
+        .container > nav  {
+          box-sizing: border-box;
+          width: 100%;
+          min-width: 300px;
+          height: 100%;
+          padding: 30px 24px;
+          background: var(--ee-drawer-background-color);
+          position: relative;
+          overflow: scroll;
+          padding-bottom: 64px;
+        }
+
+        .container > nav ::slotted(a),
+        .container > nav ::slotted(.drawer-item) {
+          display: block;
+          text-decoration: none;
+          color: var(--ee-drawer-color, #ddd);
+          line-height: 40px;
+          padding: 0 24px;
+          cursor: pointer;
+        }
+
+        .container  > nav ::slotted(a[selected]),
+        .container  > nav ::slotted(.drawer-item[selected]) {
+          color: var(--ee-drawer-selected-color);
+          font-weight: bolder;
+          border-left: 3px solid var(--ee-drawer-selected-color, white);
+          background-color: rgba(255,255,255, 0.1);
+        }
+
+        .container  > nav ::slotted(a:hover),
+        .container  > nav ::slotted(.drawer-item:hover) {
+          background-color: rgba(255,255,255, 0.05);
+        }
+
+        .container  > nav ::slotted(.head) {
+          color: var(--ee-drawer-color, white);
+          width: 100%;
+          border-bottom: 1px solid var(--ee-drawer-selected-color, white);
+          padding: 6px 70% 6px 0;
+          font-size: 1.15em;
+          margin: 10px auto;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          opened: { type: Boolean, reflect: true },
+          modal: { type: Boolean },
+          closeButton: { type: Boolean, attribute: 'close-button' }
+        }
+      }
+
+      constructor () {
+        super();
+        this.modal = false;
+        this.closeButton = true;
+        this.opened = false;
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+        this.addEventListener('click', this._handleOutsideClick);
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <div class="container">
+        ${this.closeButton ? html`<button id="close" @click="${this.close}">${close}</button>` : ''}
+        <nav>
+          <slot></slot>
+        </nav>
+      </div>
+    `
+      }
+
+      open () {
+        this.opened = true;
+      }
+
+      _handleOutsideClick (e) {
+        if (e.target.nodeName === 'EE-DRAWER') this.close();
+      }
+
+      close () {
+        this.opened = false;
+      }
+    }
+    customElements.define('ee-drawer', EeDrawer$1);
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement
+    const element = ['accessKey', 'accessKeyLabel', 'contentEditable', 'isContentEditable', 'contextMenu ', 'dataset', 'dir', 'draggable', 'dropzone', 'hidden', 'inert', 'innerText', 'itemScope ', 'itemType', 'itemId ', 'itemRef', 'itemProp', 'itemValue ', 'lang', 'noModule', 'nonce', 'offsetHeight', 'offsetLeft', 'offsetParent', 'offsetTop', 'offsetWidth', 'properties', 'spellcheck', 'tabIndex', 'title', 'translate', 'attachInternals', 'blur', 'click', 'focus', 'forceSpellCheck', 'style'];
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement
+    const formElement = ['length', 'name', 'method', 'target', 'action', 'encoding', 'enctype', 'acceptCharset', 'autocomplete', 'noValidate', 'requestAutocomplete', 'submit', 'checkValidity', 'reportValidity', 'reset', 'elements'];
+
+    // From https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement
+    const inputElement = ['form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'name', 'type', 'disabled', 'autofocus', 'required', 'value', 'checkValidity', 'validity', 'validationMessage', 'willValidate', 'checked', 'defaultChecked', 'indeterminate', 'alt', 'height', 'src', 'width', 'accept', 'allowdirs ', 'files', 'webkitdirectory ', 'webkitEntries ', 'autocomplete', 'max', 'maxLength', 'min', 'minLength', 'pattern', 'placeholder', 'readOnly', 'size', 'selectionStart', 'selectionEnd', 'selectionDirection', 'defaultValue', 'dirName', 'accessKey', 'list', 'multiple', 'files', 'labels', 'step', 'valueAsDate', 'valueAsNumber', 'autocapitalize ', 'inputmode', 'align ', 'useMap ', 'blur', 'click', 'focus', 'select', 'setSelectionRange', 'setRangeText', 'setCustomValidity', 'reportValidity', 'stepDown', 'stepUp'];
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement
+    const buttonElement = ['accessKey', 'autofocus', 'disabled', 'form', 'formAction', 'formEnctype', 'formMethod', 'formNoValidate', 'formTarget', 'labels', 'menu ', 'name', 'tabIndex', 'type', 'willValidate', 'validationMessage', 'validity', 'value', 'checkValidity', 'reportValidity', 'setCustomValidity'];
+
+    // FROM https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement
+    const selectElement = ['autofocus', 'disabled', 'labels', 'length', 'multiple', 'name', 'options', 'required', 'selectedIndex', 'selectedOptions', 'size', 'type', 'validationMessage', 'validity', 'value', 'willValidate', 'add', 'blur', 'focus', 'item', 'namedItem', 'remove', 'checkValidity', 'reportValidity', 'setCustomValidity', 'form'];
+
+    // From https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement
+    const textAreaElement = ['type', 'value', 'textLength', 'defaultValue', 'placeholder', 'rows', 'cols', 'autofocus', 'name', 'disabled', 'labels', 'maxLength', 'accessKey', 'readOnly', 'required', 'tabIndex', 'selectionStart', 'selectionEnd', 'selectionDirection', 'validity', 'willValidate', 'validationMessage', 'autocomplete ', 'autocapitalize ', 'inputMode ', 'wrap', 'blur', 'focus', 'select', 'setRangeText', 'setSelectionRange', 'checkValidity', 'reportValidity', 'setCustomValidity', 'form'];
+
+    // From https://developer.mozilla.org/en-US/docs/Web/API/HTMLMeterElement
+    const meterElement = ['high', 'low', 'max', 'min', 'optimum', 'value', 'labels'];
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLProgressElement
+    const progressElement = ['max', 'position', 'value', 'labels'];
+
+    // NativeReflectorMixin
+
+    const NativeReflectorMixin = (base) => {
+      return class Base extends base { // eslint-disable-line
+
+    // The firstUpdated method is used to perform one-time work after the element's
+    // template has been created. In this case, it will need to:
+    //
+    // 1) Find the native element (marked with `id="native"`)
+    // 3) Start reflection of attributes and properties
+    //
+        firstUpdated () {
+          /* Find the native element */
+          this.native = this.shadowRoot.querySelector('#native');
+
+          /* Reflect all attributes and properties */
+          /*  - all properties are reflected except some (listed in skipAttributes) */
+          /*  - only elected properties are reflected (listed in reflectProperties) */
+          this._reflectAttributesAndProperties();
+        }
+
+        get reflectProperties () {
+          return element
+        }
+
+        get skipProperties () {
+          return ['style']
+        }
+
+        get skipAttributes () {
+          return ['id', 'style', 'class']
+        }
+
+        afterSettingProperty () {}
+
+        getAttribute (attr) {
+          if (this.skipAttributes.indexOf(attr) !== -1) {
+            return super.getAttribute(attr)
+          }
+
+          const nativeAttribute = this.native.getAttribute(attr);
+          if (nativeAttribute !== null) return nativeAttribute
+
+          // This shouldn't really happen, but it's here as a fallback
+          // TODO: Maybe delete it and always return the native's value regardless
+          return super.getAttribute(attr)
+        }
+
+        setAttribute (attr, value) {
+          // Set the attribute
+          super.setAttribute(attr, value);
+
+          // Skip the ones in the skipAttributes list
+          if (this.skipAttributes.indexOf(attr) !== -1) return
+
+          // Assign the same attribute to the contained native
+          // element, taking care of the 'nn' syntax
+          //
+          this._setSubAttr(attr, value);
+        }
+
+        removeAttribute (attr) {
+          // Set the attribute
+          super.removeAttribute(attr);
+
+          // Skip the ones in the skipAttributes list
+          if (this.skipAttributes.indexOf(attr) !== -1) return
+
+          // Assign the same attribute to the contained native
+          // element, taking care of the 'nn' syntax
+          //
+          this._setSubAttr(attr, null);
+        }
+
+        _setSubAttr (subAttr, attrValue) {
+          const tokens = subAttr.split('::');
+
+          // Safeguard: if this.native is not yet set, it means that
+          // an attribute was set BEFORE the element was rendered. If that
+          // is the case, simply give up. _reflectAttributesAndProperties() will
+          // be run afterwards to sync things up anyway
+          if (!this.native) return
+
+          // No :: found, simply change attribute in `native`
+          if (tokens.length === 1) {
+            (attrValue === null)
+              ? this.native.removeAttribute(subAttr)
+              : this.native.setAttribute(subAttr, attrValue);
+
+          // Yes, :: is there: assign the attribute to the element with the
+          // corresponding ID
+          } else if (tokens.length === 2) {
+            const dstElement = this.shadowRoot.querySelector(`#${tokens[0]}`);
+            if (dstElement) {
+              attrValue === null
+                ? dstElement.removeAttribute(tokens[1])
+                : dstElement.setAttribute(tokens[1], attrValue);
+            }
+          }
+        }
+
+        _reflectAttributesAndProperties () {
+          // STEP #1: ATTRIBUTES FIRST
+
+          // Assign all starting attribute to the destination element
+          for (const attributeObject of this.attributes) {
+            const attr = attributeObject.name;
+
+            if (this.skipAttributes.indexOf(attr) !== -1) continue
+            this._setSubAttr(attr, super.getAttribute(attr));
+          }
+
+          // Observe changes in attribute from the source element, and reflect
+          // them to the destination element
+          const thisObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.type === 'attributes') {
+                const attr = mutation.attributeName;
+
+                // Don't reflect forbidden attributes
+                if (this.skipAttributes.indexOf(attr) !== -1) return
+
+                // Don't reflect attributes with ::
+                if (attr.indexOf('::') !== -1) return
+
+                // Check if the value has changed. If it hasn't, there is no
+                // point in re-assigning it, especially since the observer
+                // might have been triggered by this very mixin
+                const newValue = this.native.getAttribute(attr);
+                const thisValue = super.getAttribute(attr);
+                if (newValue === thisValue) return
+
+                // Assign the new value
+                (newValue === null)
+                  ? super.removeAttribute(attr)
+                  : super.setAttribute(attr, newValue);
+              }
+            });
+          });
+          thisObserver.observe(this.native, { attributes: true });
+
+          // STEP #2: METHODS (as bound functions) AND PROPERTIES (as getters/setters)
+
+          const uniqProps = [...new Set(this.reflectProperties)];
+          const proto = Object.getPrototypeOf(this);
+
+          if (!proto._alreadyReflecting) {
+            uniqProps.forEach(prop => {
+              if (this.skipProperties.indexOf(prop) !== -1) return
+              Object.defineProperty(Object.getPrototypeOf(this), prop, {
+                get: function () {
+                  const dst = this.native;
+                  if (!this.native) return undefined
+                  if (typeof dst[prop] === 'function') return dst[prop].bind(dst)
+                  else return dst[prop]
+                },
+                set: function (newValue) {
+                  const dst = this.native;
+
+                  // It IS possile that this.native isn't set yet, since the
+                  // property observer is on the prototype. So, you could have
+                  // one nn-input-box without a value assigned (and the observer is
+                  // installed for prototype) and then another one with a property
+                  // assigned at creation (observer is set, but this.native is not yet set)
+                  // If that is the case, it will assign the object's prop. Then,
+                  // when firstUpdated() runs, it will forward-assign this value to
+                  // this.native
+                  if (!dst) {
+                    if (typeof newValue !== 'undefined') {
+                      Object.defineProperty(this, prop, { value: newValue, configurable: true, writable: true });
+                    }
+                    return
+                  }
+
+                  if (typeof this.beforeSettingProperty === 'function') {
+                    this.beforeSettingProperty(prop, newValue);
+                  }
+                  if (typeof dst[prop] === 'function') return
+                  const oldValue = dst[prop];
+
+                  // Set the new value
+                  dst[prop] = newValue;
+
+                  // This is required by litElement since it won't
+                  // create a setter if there is already one
+                  this._requestUpdate(prop, oldValue);
+
+                  if (typeof this.afterSettingProperty === 'function') {
+                    this.afterSettingProperty(prop, newValue);
+                  }
+                },
+                configurable: true,
+                enumerable: true
+              });
+            });
+            proto._alreadyReflecting = true;
+          }
+
+          // Assign existing properties, in case the setter had already been triggered
+          // BEFORE firstUpdated() (in which case, the setter would have assigned
+          // OBJECT properties, without reflection)
+          uniqProps.forEach(prop => {
+            if (this.skipProperties.indexOf(prop) !== -1) return
+
+            let propValue;
+            if (Object.prototype.hasOwnProperty.call(this, prop)) {
+              propValue = this[prop];
+              delete this[prop];
+              this[prop] = propValue;
+            }
+          });
+        }
+      }
+    };
+
+    /**
+     * @license
+     * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * For AttributeParts, sets the attribute if the value is defined and removes
+     * the attribute if the value is undefined.
+     *
+     * For other part types, this directive is a no-op.
+     */
+    const ifDefined = directive((value) => (part) => {
+        if (value === undefined && part instanceof AttributePart) {
+            if (value !== part.value) {
+                const name = part.committer.name;
+                part.committer.element.removeAttribute(name);
+            }
+        }
+        else {
+            part.setValue(value);
+        }
+    });
+
+    const plusIcon = html`<svg class="icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>`;
+
+    class EeFab$1 extends ThemeableMixin('ee-fab')(StyleableMixin(NativeReflectorMixin(LitElement))) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          position: fixed;
+          right: 16px;
+          left: initial;
+          bottom: 16px;
+          top: initial;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          icon: { type: Object },
+          label: { type: String }
+        }
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <button data-descr=${ifDefined(this.label)} id="native">
+        ${this.icon ? this.icon : plusIcon}
+      </button>
+    `
+      }
+    }
+    customElements.define('ee-fab', EeFab$1);
+
+    class EeFadeIn extends ThemeableMixin('ee-fade-in')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        @-webkit-keyframes fadeIn {
+          0%   { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @-moz-keyframes fadeIn {
+          0%   { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @-o-keyframes fadeIn {
+          0%   { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes fadeIn {
+          0%   { opacity: 0; }
+          100% { opacity: 1; }
+        }
+
+        :host(:not([no-animation])) {
+          min-height: 100vh;
+          overflow-x: hidden;
+          -webkit-animation: fadeIn 0.3s ease-in; /* Safari 4+ */
+          -moz-animation:    fadeIn 0.3s ease-in; /* Fx 5+ */
+          -o-animation:      fadeIn 0.3s ease-in; /* Opera 12+ */
+          animation:         fadeIn 0.3s ease-in; /* IE 10+, Fx 29+ */
+        }
+
+      `
+        ]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <slot></slot>
+    `
+      }
+    }
+    customElements.define('ee-fade-in', EeFadeIn);
+
+    class EeToolbar$1 extends ThemeableMixin('ee-toolbar')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: flex;
+          box-sizing: border-box;
+          width: 100%;
+          align-items: center;
+          position: relative;
+          height: var(--ee-toolbar-height, 100%);
+          max-height: var(--ee-toolbar-max-height, 96px);
+          padding: 0 5px;
+          pointer-events: none;
+          font-size: var(--ee-toolbar-font-size, 20px);
+        }
+
+        :host ::slotted(*) {
+          pointer-events: auto;
+        }
+
+        :host ::slotted(.icon) {
+          font-size: 0;
+        }
+
+        :host ::slotted([title]) {
+          pointer-events: none;
+          display: flex;
+          margin: auto 20px;
+        }
+
+        :host ::slotted([bottom-item]) {
+          position: absolute;
+          top: unset;
+          bottom: 0;
+          right: 0;
+          left: 0;
+        }
+
+        :host ::slotted([top-item]) {
+          position: absolute;
+          top: 0;
+          bottom: unset;
+          right: 0;
+          left: 0;
+        }
+
+        :host ::slotted([spacer]) {
+          margin-left: 64px;
+        }
+      `
+        ]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <slot></slot>
+    `
+      }
+    }
+    customElements.define('ee-toolbar', EeToolbar$1);
+
+    const arrowback = html`<svg class="icon" height="24" viewBox="0 0 24 24" width="24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>`;
+    const menu = html`<svg class="icon" height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>`;
+
+    class EeHeader$1 extends ThemeableMixin('ee-header')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          width: 100%;
+        }
+
+        div#header {
+          display: flex;
+          width: 100%;
+          position: sticky;
+          top: 0;
+          right: 0;
+          width: 100%;
+          max-width: 100%;
+          text-align: center;
+        }
+
+        :host([menu]) div[title],
+        :host([back]) div[title] {
+          padding-right: 46px;
+        }
+
+        :host([menu][back]) div[title]{
+          padding-right: 92px;
+        }
+
+        div[title], div[middle] {
+          display: block;
+        }
+
+        div[title] h3,
+        div[title] h5 {
+          margin-block-start: 0.2em;
+          margin-block-end: 0.2em;
+        }
+
+        div[title] h5 {
+          text-align: start;
+          display: flex;
+        }
+
+        div[middle] h1, div[middle] h2,
+        div[middle] h3, div[middle] h4,
+        div[middle] h5, div[middle] h6 {
+          margin-block-start: 0.1em;
+          margin-block-end: 0.1em;
+        }
+
+        .toolbar .subtitle {
+          color: var(--ee-header-secondary-color, grey);
+        }
+        .toolbar button.icon {
+          appearance: none;
+          -webkit-appearance: none;
+          font-size: inherit;
+          vertical-align: middle;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          -webkit-appearance: none;
+          height: 40px;
+          width: 40px;
+          padding: 4px;
+          margin: auto 3px;
+          border: 1px solid transparent;
+          color: var(--ee-header-color, black);
+        }
+
+        .toolbar button.icon:focus, .toolbar button.icon:hover {
+          outline: 0;
+          border: 1px solid var(--ee-header-lines-color, #bdbdbd);
+        }
+
+        .toolbar button.icon:active {
+          outline: 0;
+          border: 1px solid #bdbdbd;
+          box-shadow: none
+          /* animation: fadeIn 0.1s ease-in; */
+        }
+
+        .toolbar button, .toolbar button svg {
+          color: var(--ee-header-color);
+          fill: var(--ee-header-color);
+        }
+
+        .toolbar div.actions {
+          position: absolute;
+          right: 20px;
+          display: flex;
+        }
+
+        ::slotted([slot=actions]) {
+          display: flex
+        }
+
+        .toolbar div.actions ::slotted(*[slot="actions"]) a {
+          line-height: unset
+        }
+
+        .toolbar div.controls {
+          align-items: left;
+        }
+
+        .toolbar div.controls ::slotted(*[slot="actions"]) {
+          z-index: var(--ee-header-actions-z-index, 2)
+        }
+
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          // Users can set these attributes to get built-in basic controls and title text.
+          // Otherwise, they can user their own with slot="controls" and slot="header-title"
+          back: { type: Boolean, reflect: true },
+          menu: { type: Boolean, reflect: true },
+          backEvent: { type: Function, attribute: 'back-event' },
+          menuEvent: { type: Function, attribute: 'menu-event' },
+          headerTitle: { type: String, attribute: 'header-title' },
+          headerSubtitle: { type: String, attribute: 'header-subtitle' }
+        }
+      }
+
+      constructor () {
+        super();
+        this.headerTitle = '';
+      }
+
+      menuEvent () {}
+
+      backEvent () {}
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <div id="header">
+        <ee-toolbar class="toolbar">
+          <div class="controls">
+            ${this.menu ? html`<button class="icon" title="Menu" @click="${this._menuEvent}">${menu}</button>` : ''}
+            ${this.back ? html`<button class="icon" title="Back" @click="${this._backEvent}">${arrowback}</button>` : ''}
+            <slot name="controls"></slot>
+          </div>
+          <div title>
+          ${this.headerTitle
+            ? html`
+                <h3>${this.headerTitle}</h3>
+                <h5>${this.headerSubtitle ? html`<div class="subtitle">${this.headerSubtitle}</div>` : ''} <slot name="header-subtitle"></slot></h5>
+            `
+            : html`
+              <slot name="header-title"></slot>
+            `
+          }
+          </div>
+          <div middle>
+            <slot name="middle"></slot>
+          </div>
+          <div class="actions">
+            <slot name="actions"></slot>
+          </div>
+        </ee-toolbar>
+        <slot name="sub-toolbar"></slot>
+      </div>
+    `
+      }
+
+      _menuEvent () {
+        this.dispatchEvent(new CustomEvent('menu-clicked', { bubbles: true, composed: true }));
+        this.menuEvent();
+      }
+
+      _backEvent () {
+        this.dispatchEvent(new CustomEvent('back-clicked', { bubbles: true, composed: true }));
+        this.backEvent();
+      }
+    }
+    customElements.define('ee-header', EeHeader$1);
+
+    class EeNavBar extends ThemeableMixin('ee-nav-bar')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 56px;
+          z-index: 100;
+        }
+
+        :host nav {
+          display: flex;
+          width: 100%;
+          height: 56px;
+          background: var(--ee-navbar-background, white);
+          color: var(--ee-navbar-color, black);
+          fill: var(--ee-navbar-color, black);
+        }
+
+        :host nav > ::slotted(*[nav-item]) {
+          margin: 0 auto;
+          padding: 8px 12px;
+          display: block;
+          position: relative;
+          opacity: 0.7;
+          height: 24px;
+          min-width: 80px;
+          max-width: 168px;
+          text-align: center;
+        }
+
+        :host nav > ::slotted(*[nav-item])::after {
+          content: attr(item-label);
+          position: absolute;
+          top: 24px;
+          left: 50%;
+          line-height: 12px;
+          font-size: 12px;
+          transform: translateX(-50%);
+          margin-top: 6px;
+          padding: 6px;
+          white-space: nowrap;
+          text-transform: uppercase;
+        }
+
+        :host nav > ::slotted(*[selected]) {
+          opacity: 1;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          selected: { type: String, reflect: true },
+          selectedAttribute: { type: String },
+          eventBubbles: { type: Boolean }
+        }
+      }
+
+      constructor () {
+        super();
+        this.selected = '';
+        this.eventBubbles = false;
+        this.selectedAttribute = 'name';
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <nav>
+        <slot @slotchange="${this._manageSlotted}"></slot>
+      </nav>
+    `
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+        // Listen to local clicked-slot event
+        this.addEventListener('clicked-slot', this._fireSelectedEvent);
+      }
+
+      // This adds a click event listener to all slotted children (the tabs)
+      _manageSlotted (e) {
+        const slot = e.currentTarget;
+        const slotted = slot.assignedNodes();
+        for (const element of slotted) {
+          element.addEventListener('click', this._clickedSlotted.bind(this));
+        }
+      }
+
+      // Each tab runs this and fires a clicked-slot event, which carries the selected value, It gets the value from the name attribute of the slotted "tab"
+      _clickedSlotted (e) {
+        console.log('slot clicked', this.selectedAttribute);
+        this.dispatchEvent(new CustomEvent('clicked-slot', { detail: { event: e, selected: e.currentTarget.getAttribute(this.selectedAttribute) } }));
+      }
+
+      // This function runs when the host element receives a clicked-slot event from it's children. It sets the selected property and fires a 'selected-changed' event with that value.
+      _fireSelectedEvent (e) {
+        this.dispatchEvent(new CustomEvent('selected-changed', { detail: { selected: e.detail.selected } }));
+        this.selected = e.detail.selected;
+      }
+    }
+    customElements.define('ee-nav-bar', EeNavBar);
+
+    class EeNetwork$1 extends ThemeableMixin('ee-network')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          position: relative;
+        }
+
+        :host([inline]) {
+          display: inline-block;
+        }
+
+        #overlay {
+          display: none; /* Hide by default */
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 100000;
+          text-align: center;
+          transition: background var(--ee-network-transition-duration, 200ms);
+        }
+
+        #overlay.overlay-loading {
+          display: block;
+          color: var(--ee-network-overlay-loading-color, #666);
+          background-color: var(--ee-network-overlay-loading-background-color, rgba(190, 190, 190, 0.75));
+        }
+
+        #overlay.clear {
+        }
+
+        #overlay.overlay-error {
+          display: block;
+          cursor: pointer; /* Hint that the object is clickable */
+          color: var(--ee-network-overlay-error-color, #c00);
+          background-color: var(--ee-network-overlay-error-background-color, rgba(255, 0, 0, 0.25));
+        }
+
+        #overlay #statusMessage {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 100%;
+        }
+
+        #content-wrapper.overlay-error,
+        :host([status="overlay-error"]) {
+          pointer-events: none;
+          opacity: 0.25;
+          min-height: 1.25rem; /* FIXME: find a proper value, this is made up */
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          manageLoadingErrors: {
+            type: Boolean,
+            attribute: 'manage-loading-errors'
+          },
+          manageSavingErrors: {
+            type: Boolean,
+            attribute: 'manage-saving-errors'
+          },
+          retryMethod: {
+            type: Function,
+            attribute: false
+          },
+          noReloadOnTap: {
+            type: Boolean,
+            attribute: 'no-reload-on-tap'
+          },
+          status: {
+            type: String,
+            reflect: true
+          },
+          statusMessages: {
+            type: Object,
+            attribute: 'status-messages'
+          },
+          messenger: {
+            type: Function,
+            attribute: false
+          },
+          overlayClass: {
+            type: String,
+            attribute: false
+          },
+          response: { type: Function, attribute: false },
+          prefetch: { type: Function, attribute: false }
+        }
+      }
+
+      constructor () {
+        super();
+        this.manageLoadingErrors = false;
+        this.manageSavingErrors = false;
+        this.retryMethod = null;
+        this.noReloadOnTap = false;
+        this.status = 'loaded';
+        this.statusMessages = {
+          loading: 'Loading\u2026', // &hellip; equivalent
+          saving: 'Saving\u2026', // &hellip; equivalent
+          error: 'An error has occurred. Click here to try again.'
+        };
+
+        this.lastInitObject = null;
+        this.lastUrl = null;
+        this.response = this.prefetch = () => {};
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <div id="overlay" class="${this.overlayClass}" @click="${this._overlayClicked}">
+        <div id="statusMessage">${this.statusMessages[this.status]}</div>
+      </div>
+      <slot></slot>
+    `
+      }
+
+      firstUpdated () {
+        this._setOverlay();
+      }
+
+      _setOverlay () {
+        switch (this.status) {
+        case 'loaded':
+        case 'saved':
+          this.overlayClass = 'clear';
+          break
+        case 'loading':
+        case 'saving':
+          this.overlayClass = 'overlay-loading';
+          break
+        case 'loading-error':
+          this.overlayClass = this.manageLoadingErrors ? 'overlay-error' : 'clear';
+          break
+        case 'saving-error':
+          this.overlayClass = this.manageSavingErrors ? 'overlay-error' : 'clear';
+          break
+        }
+      }
+
+      async _overlayClicked (e) {
+        if (this.noReloadOnTap) return
+
+        // Stop the event here
+        e.stopPropagation();
+        e.preventDefault();
+
+        // If the status is 'error', try to reload
+        if (this.status === 'loading-error' || this.status === 'saving-error') {
+          if (!this.retryMethod) {
+            const fetched = await this.fetch(this.lastUrl, this.lastInitObject);
+            if (fetched.ok) {
+              this.dispatchEvent(new CustomEvent('retry-successful', {
+                detail: {
+                  url: this.lastUrl,
+                  initObject: this.lastInitObject,
+                  fetched
+                },
+                composed: true,
+                bubbles: false
+              }));
+            }
+          }
+          else this.retryMethod(this.status, this.lastUrl, this.lastInitObject);
+        }
+      }
+
+      response () {}
+
+      messenger () {}
+
+      async fetch (url, initObject = {}) {
+        this.lastUrl = url;
+        this.lastInitObject = initObject;
+
+        // Work out manageErrors, which will only ever
+        // applu to GET
+        const fetchMethod = (initObject && initObject.method && initObject.method.toUpperCase()) || 'GET';
+        const isGet = fetchMethod === 'GET';
+        initObject.url = url;
+
+        this.status = isGet ? 'loading' : 'saving';
+        this._setOverlay();
+        this.messenger(this.status, url, initObject);
+        this.prefetch(initObject);
+
+        try {
+          const response = await fetch(initObject.url, initObject);
+          if (response.ok) {
+            this.status = isGet ? 'loaded' : 'saved';
+          } else {
+            this.status = isGet ? 'loading-error' : 'saving-error';
+          }
+          this._setOverlay();
+          this.messenger(this.status, url, initObject, response);
+          // Response hook
+          this.response(response);
+
+          return response
+        } catch (e) {
+          this.status = isGet ? 'loading-error' : 'saving-error';
+          this._setOverlay();
+          this.messenger(this.status, url, initObject);
+          this.response(null);
+          throw (e)
+        }
+      }
+    }
+    customElements.define('ee-network', EeNetwork$1);
+
+    class EeSnackBar$1 extends ThemeableMixin('ee-snack-bar')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: block;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 12px;
+          background-color: var(--ee-snackbar-background-color);
+          color: var(--ee-snackbar-color);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          will-change: transform;
+          transform: translate3d(0, 100%, 0);
+          transition-property: visibility, transform;
+          transition-duration: 0.2s;
+          visibility: hidden;
+        }
+
+        :host([active]) {
+          visibility: visible;
+          transform: translate3d(0, 0, 0);
+        }
+
+        :host([theme="success"]) {
+          background-color: green;
+          color: white;
+        }
+
+        :host([theme="info"]) {
+          background-color: gray;
+          color: white;
+        }
+
+        :host([theme="error"]) {
+          background-color: red;
+          color: white;
+        }
+        @media (min-width: 460px) {
+          :host {
+            width: 320px;
+            margin: auto;
+          }
+        }
+      `
+        ]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.message}
+    `
+      }
+
+      static get properties () {
+        return {
+          active: { type: Boolean, reflect: true },
+          message: { type: String }
+        }
+      }
+
+      _eventListener (e) {
+        const theme = e.detail.theme || 'info';
+        this.setAttribute('theme', theme);
+        this.message = e.detail.message;
+        this.show();
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+        document.addEventListener('snack-bar', this.boundEventListener);
+      }
+
+      disconnectedCallback () {
+        super.disconnectedCallBack();
+        document.removeEventListener('snack-bar', this.boundEventListener);
+      }
+
+      constructor () {
+        super();
+        this.active = false;
+        this.boundEventListener = this._eventListener.bind(this);
+        this.intervalId = null;
+      }
+
+      show () {
+        this.active = true;
+        if (this.intervalId) clearInterval(this.intervalId);
+        this.intervalId = setInterval(() => { this.active = false; }, 3000);
+      }
+    }
+
+    window.customElements.define('ee-snack-bar', EeSnackBar$1);
+
+    class EeTabs$1 extends ThemeableMixin('ee-tabs')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          position: relative;
+          width: 100%;
+          border-bottom: 1px solid var(var(--ee-tabs-lines-color, #bbb));
+        }
+
+        :host nav {
+          position: sticky;
+          top:0;
+          width: 100%;
+          border-bottom: 1px solid var(--ee-tabs-lines-color, #bbb);
+          display: flex;
+          height: var(--ee-tabs-height, 32px);
+          z-index: var(--ee-tabs-z-index, 10);
+        }
+
+        :host div#contentContainer {
+          height: 100%;
+          overflow: auto;
+        }
+
+        :host nav ::slotted(*) .icon {
+          fill: var(--ee-tabs-color);
+        }
+
+        :host nav > ::slotted(*[active]) .icon {
+          fill: var(--ee-tabs-active-color, black);
+        }
+
+        :host nav > ::slotted(*) {
+          color: var(--ee-tabs-color, black);
+          text-decoration: none;
+          line-height: var(--ee-tabs-height, 20px);
+          padding: 4px 24px;
+          border: unset;
+          border-left: 0.5px solid var(--ee-tabs-lines-color, #bbb);
+          border-right: 0.5px solid var(--ee-tabs-lines-color, #bbb);
+          border-bottom: 4px solid var(--ee-tabs-background-color, #bbb);
+          font-size: 0.9em;
+          border-radius: 0;
+          width: 100%;
+          text-align: center;
+          background-color:  var(--ee-tabs-background-color, whitesmoke);
+          cursor: default;
+        }
+
+        :host nav > ::slotted(*:last-child) {
+          border-right-color: var(--ee-tabs-background-color, #bbb)
+        }
+
+        :host nav > ::slotted(*:first-child) {
+          border-left-color: var(--ee-tabs-background-color, #bbb)
+        }
+
+        :host nav > ::slotted(*[active]) {
+          color: var(--ee-tabs-active-color);
+          border-bottom: 4px solid var(--ee-tabs-active-color, black);
+          background-color: var(--ee-tabs-active-background-color, white);
+          font-size: bold;
+        }
+
+        :host nav > ::slotted(*:focus),
+        :host nav > ::slotted(*:hover) {
+          /* outline:0 ; */
+          border-left: 0.5px solid var(--ee-tabs-lines-color, #bbb);
+          border-right: 0.5px solid var(--ee-tabs-lines-color, #bbb);
+          border-bottom: 4px solid var(--ee-tabs-active-color, black);
+          filter: brightness(150%)
+        }
+
+        :host nav > ::slotted(*:active) {
+          background: #cccccc;
+          border-bottom: 4px solid #bdbdbd;
+          box-shadow: none;
+        }
+
+        :host nav > ::slotted(*[disabled]) {
+          box-shadow: none
+        }
+
+        :host nav > ::slotted(*.icon:active) {
+          background: #cccccc;
+          border: unset;
+          border-radius: 50%;
+        }
+
+        :host nav > ::slotted(*.icon:hover) svg, :host > ::slotted(*:hover) svg {
+          fill: var(--ee-tabs-color, black);
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          useHash: { type: Boolean, attribute: 'use-hash' },
+          passive: { type: Boolean },
+          default: { type: String },
+          nameAttribute: { type: String, attribute: 'name-attribute' }
+        }
+      }
+
+      constructor () {
+        super();
+        this.nameAttribute = 'name';
+        this.useHash = false;
+        this.passive = false;
+      }
+
+      /** Tabs usage
+       * add elements within the ee-tabs tags to create tabs.
+       * Tab elements must have an name attribute, or you can set a custom value to 'active-attribute'. Index support will be added soon
+       */
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+    <nav>
+      <slot id="tabs" @slotchange="${this._manageSlottedTabs}"></slot>
+    </nav>
+    <div id="contentContainer">
+      <slot name="content"></slot>
+    </div>
+    `
+      }
+
+      _allTabs () {
+        return this.shadowRoot.querySelector('slot#tabs').assignedElements()
+      }
+
+      _workoutHash () {
+        let tab;
+        if (this.useHash) {
+          if (window.location.hash) tab = window.location.hash.substr(1);
+          else if (this.default) tab = this.default;
+          else tab = this._allTabs()[0];
+        }
+        return tab
+      }
+
+      firstUpdated () {
+        super.firstUpdated();
+
+        const tab = this._workoutHash();
+        this.select(tab, false);
+
+        window.addEventListener('popstate', e => {
+          const tab = this._workoutHash();
+          if (this.useHash) {
+            this.select(tab, true);
+          }
+        });
+      }
+
+      _isActive (el) {
+        return el.hasAttribute('active')
+      }
+
+      select (tab, clearAll = true) {
+        let pages;
+
+        // Find the tab. If it can't be found, end of story
+        if (typeof tab === 'string') {
+          tab = this._allTabs().find(i => i.getAttribute(this.nameAttribute) === tab);
+        }
+        if (!tab) return
+
+        // If clearAll was passed, clear selection of tabs and (if !passive) pages
+        if (clearAll) {
+          pages = this.shadowRoot.querySelector('slot[name="content"]').assignedElements();
+
+          if (!this.passive) {
+            this._clearAll(this._allTabs(), pages);
+          } else {
+            this._clearAll(this._allTabs());
+          }
+        }
+
+        // Activate the tab
+        tab.toggleAttribute('active', true);
+        tab.active = true;
+
+        // If !passive, activate the corresponding page
+        if (!this.passive) {
+          const name = tab.getAttribute(this.nameAttribute);
+          const activePage = pages.find(el => el.getAttribute(this.nameAttribute) === name);
+          if (activePage) {
+            activePage.toggleAttribute('active', true);
+            activePage.active = true;
+          }
+        }
+      }
+
+      // Clear the seletecAttribute from the current active tab and page
+      _clearAll (tabs, pages) {
+        //
+        const currentTab = tabs.find(this._isActive.bind(this));
+        if (currentTab) {
+          currentTab.toggleAttribute('active', false);
+          currentTab.active = false;
+        }
+
+        if (!this.passive) {
+          const currentPage = pages.find(this._isActive.bind(this));
+          if (currentPage) {
+            currentPage.toggleAttribute('active', false);
+            currentPage.active = false;
+          }
+        }
+      }
+
+      // This adds a click event listener to all slotted children (the tabs)
+      _manageSlottedTabs (e) {
+        for (const element of this._allTabs()) {
+          element.addEventListener('click', (e) => { this.select.bind(this)(e.currentTarget); });
+          element.setAttribute('tabindex', 1);
+        }
+
+        if (!this.passive && this.default) {
+          this.select(this.default, true);
+        }
+      }
+    }
+    customElements.define('ee-tabs', EeTabs$1);
+
+    // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+    // https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
+
+    // https://github.com/Victor-Bernabe/lit-media-query/blob/master/lit-media-query.js
+
+    class EeTable extends ThemeableMixin('ee-table')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          css`
+        :host {
+          display: block;
+          width: 100%;
+        }
+
+        :host([striped]) ::slotted(ee-row:nth-child(odd)) {
+          background-color: var(--ee-table-striped-odd-color, white)
+        }
+
+        :host([striped]) ::slotted(ee-row:nth-child(even)) {
+          background-color: var(--ee-table-striped-even-color, whitesmoke)
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          small: {
+            type: String
+          },
+          medium: {
+            type: String
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.small = 600;
+        this.medium = 1024;
+      }
+
+      _changeRowsSize (size) {
+        const rows = this.shadowRoot.querySelector('slot').assignedElements();
+        for (const row of rows) row.setAttribute('size', size);
+      }
+
+      _handleResize () {
+        if (window.matchMedia(`(max-width: ${this.small}px)`).matches) {
+          this._changeRowsSize('small');
+        } else if (window.matchMedia(`(max-width: ${this.medium}px)`).matches) {
+          this._changeRowsSize('medium');
+        } else {
+          this._changeRowsSize('large');
+        }
+      }
+
+      firstUpdated () {
+        this._handleResize();
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+
+        // Check if Visual Viewport API is supported
+        const listenObject = window.visualViewport || window;
+        listenObject.addEventListener('resize', () => {
+          this._handleResize();
+        });
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <slot @slotchange="${() => { console.log('slot change'); this._handleResize(); }}"></slot>
+    `
+      }
+    }
+    customElements.define('ee-table', EeTable);
+
+    class EeCell extends ThemeableMixin('ee-cell')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          css`
+        :host {
+          flex-grow: 1;
+          flex-shrink: 1;
+          box-sizing: border-box;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          border: 1px solid transparent;
+        }
+
+        :host([selectable]:hover) {
+          border: 1px solid var(--ee-cell-hover-border-color, #ddd);
+          background-color: 1px solid var(--ee-cell-hover-background-color, #eee);
+        }
+
+        :host([sq]) {
+          flex-grow: 0.25;
+        }
+        :host([sh]) {
+          flex-grow: 0.5;
+        }
+        :host([s1]) {
+          flex-grow: 1;
+        }
+        :host([s2]) {
+          flex-grow: 2;
+        }
+        :host([s3]) {
+          flex-grow: 3;
+        }
+        :host([s4]) {
+          flex-grow: 4;
+        }
+        :host([s5]) {
+          flex-grow: 5;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+        }
+      }
+
+      constructor () {
+        super();
+        this.SOMETHING = false;
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <slot></slot>
+    `
+      }
+    }
+    customElements.define('ee-cell', EeCell);
+
+    class EeRow extends ThemeableMixin('ee-row')(StyleableMixin(LitElement)) {
+      static get styles () {
+        return [
+          css`
+        :host {
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          width: 100%;
+          border: 1px solid transparent;
+          border-bottom: var(--ee-row-border-bottom, 1px solid #777);
+        }
+
+        :host(:last-child) {
+          border-color: transparent;
+        }
+
+        :host([header]) {
+          height: var(--ee-row-header-height, 2em);
+          box-sizing: border-box;
+          font-weight: bold;
+          border-bottom: var(--ee-row-header-border-bottom, 2px solid #777);
+        }
+
+        :host(:hover:not([header])) {
+          border: 1px solid var(--ee-row-hover-border-color, #ddd);
+          background: var(--ee-row-hover-background, #eee) !important;
+        }
+
+        :host([frozen]) {
+          position: sticky;
+          top: 0;
+          background: var(--ee-row-background, white);
+        }
+
+        :host([size=small]) ::slotted(ee-cell) {
+          flex-basis: 100%;
+        }
+
+        :host([size=medium]) ::slotted(ee-cell),
+        :host([size=large]) ::slotted(ee-cell) {
+          flex-basis: 0;
+        }
+
+        :host([size=medium]) ::slotted(ee-cell[extra]),
+        :host([size=small]) ::slotted(ee-cell[extra])
+         {
+          display:none !important;
+        }
+
+        :host([size=small]) ::slotted(ee-cell[header]) {
+          display: none !important;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+        }
+      }
+
+      constructor () {
+        super();
+        this.SOMETHING = false;
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <slot></slot>
+    `
+      }
+    }
+    customElements.define('ee-row', EeRow);
+
+    /* globals customElements */
+    class NnForm$1 extends ThemeableMixin('nn-form')(StyleableMixin(NativeReflectorMixin(LitElement))) {
+      get reflectProperties () {
+        return [...super.reflectProperties, ...formElement]
+      }
+
+      get skipProperties () {
+        return [...super.skipProperties, 'elements', 'checkValidity', 'reportValidity', 'reset']
+      }
+
+      reportValidity () {
+        // Check validity in form
+        let valid = true;
+
+        for (const el of this.elements) {
+          if (typeof el.reportValidity === 'function') {
+            // Native element may have customValidity set
+            // by a server response. Clear any existing custom
+            // errors and report validity
+            el.setCustomValidity('');
+            if (!el.reportValidity()) {
+              valid = false;
+            }
+          }
+        }
+        return valid
+      }
+
+      checkValidity () {
+        // Check validity in form
+        let valid = true;
+        // if (!this.native.checkValidity()) valid = false
+
+        for (const el of this.elements) {
+          if (typeof el.checkValidity === 'function') {
+            // Native element may have customValidity set
+            // by a server response. Clear any existing custom
+            // errors and report validity
+            el.setCustomValidity('');
+            if (!el.checkValidity()) {
+              valid = false;
+            }
+          }
+        }
+        return valid
+      }
+
+      reset () {
+        if (!this.native) return
+
+        this.native.reset();
+
+        // TODO: Adjust this for radios in a nice sensible way
+        for (const el of this.elements) {
+          const valueSource = this._getElementValueSource(el);
+
+          if (this._radioElement(el)) {
+            el[valueSource] = el.getAttribute(valueSource) !== null;
+          } else if (this._checkboxElement(el)) {
+            el[valueSource] = el.getAttribute(valueSource) !== null;
+          } else {
+            el[valueSource] = el.getAttribute(valueSource);
+          }
+        }
+      }
+
+      _selectElement (el) {
+        if (typeof el.selectedIndex !== 'undefined' || el.getAttribute('as-select') !== null) return true
+        return false
+      }
+
+      _checkboxElement (el) {
+        if (el.type === 'checkbox') return true
+        if (el.getAttribute('as-checkbox') !== null) return true
+        return false
+      }
+
+      _radioElement (el) {
+        if (el.type === 'radio') return true
+        if (el.getAttribute('as-radio') !== null) return true
+        return false
+      }
+
+      _getElementValueSource (el) {
+        if (el.type === 'checkbox' || el.type === 'radio') return 'checked'
+        if (el.getAttribute('value-source')) return el.getAttribute('value-source')
+        return 'value'
+      }
+
+      get elements () {
+        // A tags (links) can have "name", filter them out
+        return [...this.querySelectorAll('[name]')].filter(el => el.tagName !== 'A')
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <form id="native">
+        <slot></slot>
+      </form>
+    `
+      }
+    }
+    customElements.define('nn-form', NnForm$1);
+
+    /* globals customElements CustomEvent */
+    class EnForm$1 extends ThemeableMixin('en-form')(NnForm$1) {
+      get skipProperties () {
+        return [...super.skipProperties, 'submit']
+      }
+
+      static get properties () {
+        return {
+
+          fetchingElement: {
+            type: String,
+            attribute: 'fetching-element'
+          },
+
+          recordId: {
+            type: String,
+            attribute: 'record-id'
+          },
+
+          setFormAfterSubmit: {
+            type: Boolean,
+            attribute: 'set-form-after-submit'
+          },
+
+          resetFormAfterSubmit: {
+            type: Boolean,
+            attribute: 'reset-form-after-submit'
+          },
+
+          validateOnLoad: {
+            type: Boolean,
+            attribute: 'validate-on-load'
+          },
+
+          validateOnRender: {
+            type: Boolean,
+            attribute: 'validate-on-render'
+          },
+
+          submitCheckboxesAsNative: {
+            type: Boolean,
+            attribute: 'submit-checkboxes-as-native'
+
+          },
+          noAutoload: {
+            type: Boolean,
+            attribute: 'no-autoload'
+          },
+
+          // This will allow users to redefine methods declaratively
+          createSubmitObject: { type: Function, attribute: false },
+          presubmit: { type: Function, attribute: false },
+          response: { type: Function, attribute: false },
+          postload: { type: Function, attribute: false },
+          extrapolateErrors: { type: Function, attribute: false }
+
+        }
+      }
+
+      constructor () {
+        super();
+        this.validateOnLoad = false;
+        this.validateOnRender = false;
+        this.fetchingElement = null;
+        this.submitCheckboxesAsNative = false;
+        this._boundRealtimeSubmitter = this._realTimeSubmitter.bind(this);
+        this.inFlight = false;
+        this.attemptedFlight = false;
+        this.inFlightMap = new WeakMap();
+        this.attemptedFlightMap = new WeakMap();
+
+        this.submitObject = {};
+      }
+
+      async _allChildrenCompleted () {
+        // Wait for all children to be ready to rock and roll
+        for (const el of this.elements) {
+          // TODO: What about React, Vue, etc.? Uniform API across element libraries?
+          if (typeof el.updateComplete !== 'undefined') {
+            await el.updateComplete;
+          }
+        }
+      }
+
+      _realTimeSubmitter (e) {
+        this.submit(e.target);
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+        this._allChildrenCompleted().then(() => {
+          for (const el of this.elements) {
+            const realTime = el.getAttribute('real-time') !== null;
+            const realTimeEvent = el.getAttribute('real-time-event') || 'input';
+            if (!realTime || !realTimeEvent) continue
+            el.addEventListener(realTimeEvent, this._boundRealtimeSubmitter);
+          }
+        });
+      }
+
+      disconnectedCallback () {
+        super.disconnectedCallback();
+        for (const el of this.elements) {
+          const realTime = el.getAttribute('real-time');
+          if (realTime === null) continue
+          const realTimeEvent = el.getAttribute('real-time-event');
+          if (!realTimeEvent) continue
+
+          el.removeEventListener(realTimeEvent, this._boundRealtimeSubmitter);
+        }
+      }
+
+      async firstUpdated () {
+        super.firstUpdated();
+
+        if (this.validateOnRender) {
+          await this._allChildrenCompleted();
+          // Check validity
+          this.reportValidity();
+        }
+      }
+
+      setFormElementValues (o) {
+        for (const k in o) {
+          this.setFormElementValue(k, o[k]);
+        }
+      }
+
+      setRecordObject (o) {
+        o = { ...o };
+        const elHash = {};
+        for (const el of this.elements) elHash[el.getAttribute('name')] = el;
+
+        for (const k of Object.keys(elHash)) {
+          o[k] = this.getFormElementValue(k);
+        }
+        return o
+      }
+
+      extrapolateErrors (o) {
+        return o
+      }
+
+      createSubmitObject (elements) {
+        const r = {};
+        for (const el of elements) {
+          const elName = el.getAttribute('name');
+          // Every submit element MUST have a name set
+          if (typeof elName === 'undefined' || elName === null) continue
+
+          // Radio will only happen once thanks to checking for undefined
+          if (typeof r[elName] !== 'undefined') continue
+          if (el.getAttribute('no-submit') !== null) continue
+          // Checkboxes are special: they might be handled as native ones,
+          // (NOTHING set if unchecked, and their value set if checked) or
+          // as booleans (true for checked, or false for unchecked)
+          if (this._checkboxElement(el)) {
+            if (this.submitCheckboxesAsNative) {
+              // As native checkboxes.
+              const val = this.getFormElementValue(elName);
+              if (val) r[elName] = val;
+            } else {
+              // As more app-friendly boolean value
+              r[elName] = !!this.getFormElementValue(elName);
+            }
+          } else {
+            r[elName] = this.getFormElementValue(elName);
+          }
+        }
+        return r
+      }
+
+      presubmit () {}
+
+      response () {}
+
+      postload () {}
+
+      _disableElements (elements) {
+        for (const el of elements) {
+          if (!el.disabled) el.setAttribute('disabled', true);
+        }
+      }
+
+      _enableElements (elements) {
+        for (const el of elements) el.removeAttribute('disabled');
+      }
+
+      _fetchEl (specificElement) {
+        // Tries to figure out what the fetching element is.
+        // if fetching-element was passed, then it's either considered an ID
+        // or the element itself.
+        // Otherwise it will look for an ee-network or with an element with class
+        // .network. Finally, it will use `window`
+        if (specificElement) {
+          let pEl;
+          pEl = specificElement;
+          let found = false;
+          while (pEl.parentElement) {
+            pEl = pEl.parentElement;
+            if (pEl.tagName === 'EE-NETWORK' || pEl.classList.contains('network')) {
+              found = true;
+              break
+            }
+          }
+          return found ? pEl : window
+        } else {
+          if (this.fetchingElement) {
+            if (typeof this.fetchingElement === 'string') return this.querySelector(`#${this.fetchingElement}`)
+            else return this.fetchingElement
+          } else {
+            let maybeNetwork = this.querySelector('ee-network');
+            if (!maybeNetwork) maybeNetwork = this.querySelector('.network');
+            return maybeNetwork || window
+          }
+        }
+      }
+
+      getFormElementValue (elName) {
+        const elements = [...this.elements].filter(el => el.getAttribute('name') === elName);
+
+        if (!elements.length) {
+          console.error('Trying to set', elName, 'but no such element in form');
+          return
+        }
+
+        if (elements.length === 1) {
+          const el = elements[0];
+
+          const valueSource = this._getElementValueSource(el);
+          if (this._checkboxElement(el)) {
+            return el[valueSource]
+              ? (el.value ? el.value : 'on')
+              : undefined
+          } else if (this._selectElement(el)) {
+            return el[valueSource]
+          } else {
+            return el[valueSource]
+          }
+        } else {
+          const nonRadio = elements.filter(el => !this._radioElement(el));
+          if (nonRadio.length) {
+            console.error('Duplicate name', elName, 'for non-radio elements');
+            return
+          }
+
+          const checked = elements.find(el => {
+            const valueSource = this._getElementValueSource(el);
+            return el[valueSource]
+          });
+          if (checked) return checked.value
+          else return undefined
+        }
+      }
+
+      setFormElementValue (elName, value) {
+        const el = [...this.elements].find(el => {
+          if (this._radioElement(el)) {
+            return el.getAttribute('name') === elName && el.value === value
+          } else {
+            return el.getAttribute('name') === elName
+          }
+        });
+
+        if (!el) return
+
+        // Get the original value
+        const valueSource = this._getElementValueSource(el);
+
+        // CHECKBOXES
+        if (this._checkboxElement(el)) {
+          el[valueSource] = !!value;
+
+        // RADIO
+        // Radio elements
+        } else if (this._radioElement(el)) {
+          el[valueSource] = true;
+          const others = [...this.elements].filter(e =>
+            el !== e &&
+            this._radioElement(el)
+          );
+          for (const other of others) other[valueSource] = false;
+
+        // SELECT
+        // Selectable elements (with prop selectedIndex)
+        } else if (this._selectElement(el)) {
+          if (!value) el.selectedIndex = 0;
+          else el[valueSource] = value;
+
+        // Any other case
+        } else {
+          el[valueSource] = value;
+        }
+      }
+
+      async submit (specificElement) {
+        // Clear all custom validities if they are set
+        // Native elements will NEED this, or any invalid state
+        // will persist even if validation passes
+        if (specificElement) {
+          if (typeof specificElement.setCustomValidity === 'function') specificElement.setCustomValidity('');
+          this.submitObject = this.createSubmitObject([specificElement]);
+          if (typeof specificElement.reportValidity === 'function' && !specificElement.reportValidity()) return
+        } else {
+          for (const el of this.elements) {
+            if (typeof el.setCustomValidity === 'function') el.setCustomValidity('');
+          }
+          this.submitObject = this.createSubmitObject(this.elements);
+          if (!this.reportValidity()) return
+        }
+        // Old unused code
+        // if (specificElement && typeof specificElement.reportValidity === 'function' && !this.reportValidity()) return
+
+        // Run validators before submitting the form. If one of them fails,
+        // it won't go further
+
+        // inFlightMap is a map of all connections, using the specificElement
+        // as key (or "window" if there is no specific element)
+        const mapIndex = specificElement || this;
+
+        // The connection is ongoing: add a "specificElement" to the attempted
+        // field, and simply return.
+        // Towards the end, this function will check that "attempted" which,
+        // if set, means that the form needs to be resubmitted with that
+        // specificElement
+        if (this.inFlightMap.has(mapIndex)) {
+          this.inFlightMap.set(mapIndex, { attempted: true });
+          return
+        }
+        this.inFlightMap.set(mapIndex, { attempted: false });
+
+        // The element's method can only be null, POST or PUT.
+        // If not null, and not "PUT", it's set to "POST"
+        let elementMethod = this.getAttribute('method');
+        if (elementMethod && elementMethod.toUpperCase() !== 'PUT') {
+          elementMethod = 'POST';
+        }
+
+        // The 'method' attribute will have priority no matter what.
+        // If `method` is not set, then it will depend on recordId (PUT if present,
+        // POST if not)
+        const method = elementMethod === null
+          ? this.recordId ? 'PUT' : 'POST'
+          : elementMethod;
+
+        // Set the url, which will also depend on recordId
+        const action = this.getAttribute('action');
+        if (!action) throw new Error('The submitted form has no action URL set')
+        const url = action + (this.recordId ? `/${this.recordId}` : '');
+
+        const fetchOptions = {
+          url,
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow', // manual, *follow, error
+          body: this.submitObject // body data type must match "Content-Type" header
+        };
+
+        // HOOK: Allow devs to customise the request about to be sent to the server
+        this.presubmit(fetchOptions);
+
+        // Disable the elements
+        if (!specificElement) this._disableElements(this.elements);
+
+        // Attempt the submission
+        let networkError = false;
+        let response;
+        let errs;
+        try {
+          // fetch() wants a stingified body
+          const fo = { ...fetchOptions, ...{ body: JSON.stringify(fetchOptions.body) } };
+          const el = this._fetchEl(specificElement);
+          response = await el.fetch(fetchOptions.url, fo);
+        } catch (e) {
+          console.log('ERROR!', e);
+          networkError = true;
+        }
+
+        // CASE #1: network error.
+        if (networkError) {
+          console.log('Network error!');
+
+          // Re-enable the elements
+          if (!specificElement) this._enableElements(this.elements);
+
+          // Emit event to make it possible to tell the user via UI about the problem
+          const event = new CustomEvent('form-error', { detail: { type: 'network' }, bubbles: true, composed: true });
+          this.dispatchEvent(event);
+
+          // Response hook
+          this.response(null, null, fetchOptions);
+        //
+        // CASE #2: HTTP error.
+        // Invalidate the problem fields
+        } else if (!response.ok) {
+          //
+          // Try and get the errors object from the reponse's json
+          let originalErrs;
+          try {
+            originalErrs = await response.json();
+          } catch (e) {
+            originalErrs = {};
+          }
+          errs = this.extrapolateErrors(originalErrs) || {};
+
+          // Emit event to make it possible to tell the user via UI about the problem
+          const event = new CustomEvent('form-error', { detail: { type: 'http', response, errs }, bubbles: true, composed: true });
+          this.dispatchEvent(event);
+
+          // Re-enable the elements
+          // This must happen before setCustomValidity() and reportValidity()
+          if (!specificElement) this._enableElements(this.elements);
+
+          // Set error messages
+          if (errs.errors && errs.errors.length) {
+            const elHash = {};
+            for (const el of this.elements) {
+              elHash[el.getAttribute('name')] = el;
+            }
+            for (const err of errs.errors) {
+              const el = elHash[err.field];
+              if (el && el.setCustomValidity) {
+                el.setCustomValidity(err.message);
+                el.reportValidity();
+              }
+            }
+          }
+
+          // Response hook
+          this.response(response, errs, fetchOptions);
+        // CASE #3: NO error. Set fields to their
+        // new values
+        } else {
+          // Convert the result to JSON
+          const v = await response.json();
+
+          let attempted;
+          if (this.inFlightMap.has(mapIndex)) {
+            attempted = this.inFlightMap.get(mapIndex).attempted;
+          }
+
+          // HOOK Set the form values, in case the server processed some values
+          // Note: this is only ever called if set-form-after-submit was
+          // passed to the form.
+          if (this.setFormAfterSubmit) {
+            // Won't overwrite fields if another attempt is queued
+            if (!attempted) {
+              if (!specificElement) {
+                this.setFormElementValues(v);
+              } else {
+                const name = mapIndex.name;
+                this.setFormElementValues({ [name]: v[name] });
+              }
+            }
+          }
+          this.postload(v, 'submit');
+
+          if (this.resetFormAfterSubmit && !attempted && !specificElement) this.reset();
+
+          // Re-enable the elements
+          if (!specificElement) this._enableElements(this.elements);
+
+          // Emit event to make it possible to tell the user via UI about the problem
+          const event = new CustomEvent('form-ok', { detail: { response }, bubbles: true, composed: true });
+          this.dispatchEvent(event);
+
+          // Response hook
+          this.response(response, v, fetchOptions);
+        }
+
+        if (this.inFlightMap.has(mapIndex)) {
+          const attempted = this.inFlightMap.get(mapIndex).attempted;
+          this.inFlightMap.delete(mapIndex);
+          if (attempted) {
+            this.submit(specificElement);
+          }
+        }
+      }
+
+      async updated (changedProperties) {
+        super.updated();
+
+        // If no-autoload is set to true, or there is no autoload or no recordId,
+        // simply give up: nothing to do
+        if (this.noAutoload || !changedProperties.has('recordId')) return
+
+        // Record ID must be "something"
+        if (typeof this.recordId === 'undefined' || this.recordId === null) return
+
+        return this.preloadData()
+      }
+
+      async preloadData () {
+        // Work out the action's URL, adding the record ID  at the end
+        // (It will be a get)
+        // If there is a result, fetch the element values
+        const action = this.getAttribute('action');
+        let response;
+        if (action) {
+          // This will make sure that the element is actually visible
+          // before doing the fetch
+          await this.updateComplete;
+
+          // Disable elements
+          this._disableElements(this.elements);
+
+          // Fetch the data and trasform it to json
+          let v;
+          try {
+            const el = this._fetchEl();
+            response = await el.fetch(action + '/' + this.recordId);
+            v = await response.json();
+          } catch (e) {
+            console.error('WARNING: Fetching element failed to fetch');
+            v = {};
+          }
+
+          // Set values
+          this.setFormElementValues(v);
+
+          // Re-enabled all disabled fields
+          this._enableElements(this.elements);
+
+          // Run reportValidity if validateOnRender is on
+          if (this.validateOnLoad) {
+            this.reportValidity();
+          }
+
+          // Run postload hook
+          this.postload(v, 'autoload');
+        }
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <form id="native">
+        <slot></slot>
+      </form>
+    `
+      }
+    }
+    customElements.define('en-form', EnForm$1);
+
+    const InputMixin = (base) => {
+      return class Base extends base {
+        get skipAttributes () {
+          return [...super.skipAttributes, 'type']
+        }
+
+        get reflectProperties () {
+          return [...super.reflectProperties, ...inputElement]
+        }
+      }
+    };
+
+    const FormElementMixin = (base) => {
+      return class Base extends base {
+        get skipAttributes () {
+          return [
+            ...super.skipAttributes, 'form'
+          ]
+        }
+
+        get skipProperties () {
+          return [...super.skipProperties, 'form']
+        }
+
+        connectedCallback () {
+          super.connectedCallback();
+          this.assignFormProperty();
+        }
+
+        assignFormProperty () {
+          // if (this.tagName === 'NN-FORM' || this.tagName === 'EN-FORM') return
+          let el = this;
+          while ((el = el.parentElement) && (el.tagName !== 'FORM' && el.tagName !== 'NN-FORM' && el.tagName !== 'EN-FORM')) { } // eslint-disable-line no-empty
+          this.form = el;
+        }
+      }
+    };
+
+    const NativeValidatorMixin = (base) => {
+      return class Base extends base {
+        static get properties () {
+          return {
+            nativeErrorMessages: {
+              type: Boolean,
+              attribute: 'native-error-messages'
+            },
+            shownValidationMessage: {
+              type: String,
+              attribute: false
+            },
+            validator: { type: Function },
+            validationMessages: {
+              type: Object,
+              attribute: 'validition-messages'
+            },
+            validationMessagePosition: {
+              type: String,
+              attribute: 'validation-message-position'
+            }
+          }
+        }
+
+        static get styles () {
+          return [
+            super.styles || [],
+            css`
+
+          span.error-message {
+            color: red;
+          }
+
+          :invalid {
+            background-color: pink;
+            border: var(--native-validator-mixin-input-border-invalid, 1px solid #bb7777);
+          }
+        `
+          ]
+        }
+
+        constructor () {
+          super();
+          this.validator = () => '';
+          this.nativeValidationKeys = [
+            'badInput',
+            'customError',
+            'patternMismatch',
+            'rangeOverflow',
+            'rangeUnderflow',
+            'stepMismatch',
+            'valueMissing',
+            'tooLong',
+            'tooShort',
+            'typeMismatch'
+          ];
+          this.validationMessages = {};
+          this.validationMessagePosition = 'before';
+          this._showPrettyError = false;
+        }
+
+        get skipProperties () {
+          return [...super.skipProperties, 'checkValidity', 'reportValidity', 'setCustomValidity']
+        }
+
+        get validationMessageTemplate () {
+          return html`
+        <span class="error-message">
+          ${this.shownValidationMessage}
+        </span>
+      `
+        }
+
+        get ifValidationMessageBefore () {
+          if (this.validationMessagePosition === 'after') return ''
+          return this.validationMessageTemplate
+        }
+
+        get ifValidationMessageAfter () {
+          if (this.validationMessagePosition === 'before') return ''
+          return this.validationMessageTemplate
+        }
+
+        setCustomValidity (m) {
+          return this.native.setCustomValidity(m)
+        }
+
+        _runValidator () {
+          // Call the validator with a value. Here an element could be a checkbox,
+          // a select, an simple text input, etc.
+          // If the containing form has _getElementValueSource, that is used to
+          // figure out what to pass to the validato (as well as _submitObject)
+          let value;
+          let submitObject;
+          if (this.form && this.form._getElementValueSource) {
+            value = this[this.form._getElementValueSource(this)];
+            submitObject = this.form.submitObject;
+          }
+          const ownErrorMessage = this.validator(value, submitObject);
+          if (ownErrorMessage) this.setCustomValidity(ownErrorMessage);
+
+        }
+
+        reportValidity () {
+          // Run custom validator. Note that custom validator
+          // will only ever run on filed without an existing customError.
+          if (!this.native.validity.customError) {
+            this._runValidator();
+          }
+
+          // Hide the fancy error message by default
+          this.shownValidationMessage = '';
+
+          // Run reportValidity which will display the native
+          // error messages.
+          // Suppress the pretty error messages
+          if (this.nativeErrorMessages) {
+            this._showPrettyError = false;
+            return this.native.reportValidity()
+          } else {
+            // Since pretty errors will be shown, it will actually
+            // return checkValidity() which will not show the
+            // error messages
+            this._showPrettyError = true;
+            return this.native.checkValidity()
+          }
+        }
+
+        checkValidity () {
+          // Run custom validator. Note that custom validator
+          // will only ever run on filed without an existing customError.
+          if (!this.native.validity.customError) {
+            this._runValidator();
+          }
+
+          this._showPrettyError = false;
+          return this.native.checkValidity()
+        }
+
+        firstUpdated () {
+          super.firstUpdated();
+          this.native.oninput = (e) => {
+            this.setCustomValidity('');
+            this.reportValidity();
+          };
+
+          this.native.oninvalid = (e) => {
+            // No pretty error to be shown (probably running checkValidity())
+            if (!this._showPrettyError) return
+
+            const validity = e.target.validity;
+
+            // Find which one flag in validity is raised
+            let found;
+            for (const k of this.nativeValidationKeys) {
+              if (validity[k]) {
+                found = k;
+                break
+              }
+            }
+
+            // Assign shownValidationMessage
+            // Allow translating with specific function
+            const translator = this.validationMessages[found];
+            if (translator) {
+              this.shownValidationMessage = (typeof translator === 'function')
+                ? translator(e.target.validationMessage)
+                : translator;
+            } else {
+              this.shownValidationMessage = e.target.validationMessage;
+            }
+          };
+        }
+      }
+    };
+
+    class EnInputRange$1 extends ThemeableMixin('en-input-range')(FormElementMixin(NativeValidatorMixin(StyleableMixin(LabelsMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        :host {
+          display: flex;
+          height: 30px;
+        }
+
+        #native {
+          margin: auto 20px;
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          shownValue: {
+            type: String,
+            attribute: false
+          }
+        }
+      }
+
+      firstUpdated () {
+        super.firstUpdated();
+        this.shownValue = this.shadowRoot.querySelector('#native').value;
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <slot @slotchange="${this.slotChanged}" id="range-amount-before" name="range-amount-before"></slot>
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input @change=${this.updateShownValue} type="range" id="native" real-time-event="input">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+      <slot @slotchange="${this.slotChanged}" id="range-amount-after" name="range-amount-after"></slot>
+    `
+      }
+
+      _updateSpanInSlot (slot, value) {
+        if (slot) {
+          const slotContents = slot.assignedElements()[0];
+          if (slotContents) {
+            const amountSpan = slotContents.querySelector('span#range-amount');
+            if (amountSpan) {
+              amountSpan.innerHTML = Number(value);
+            }
+          }
+        }
+      }
+
+      updateShownValue (e) {
+        let slot;
+        this.shownValue = e.srcElement.value;
+
+        slot = this.shadowRoot.querySelector('slot#range-amount-before');
+        this._updateSpanInSlot(slot, this.shownValue);
+
+        slot = this.shadowRoot.querySelector('slot#range-amount-after');
+        this._updateSpanInSlot(slot, this.shownValue);
+      }
+
+      slotChanged (e) {
+        this._updateSpanInSlot(e.srcElement, this.shownValue);
+      }
+    }
+    window.customElements.define('en-input-range', EnInputRange$1);
+
+    class NnButton$1 extends ThemeableMixin('nn-button')(FormElementMixin(NativeValidatorMixin(StyleableMixin(NativeReflectorMixin(LitElement))))) {
+      get skipAttributes () {
+        return [...super.skipAttributes, 'form']
+      }
+
+      get reflectProperties () {
+        return [...super.reflectProperties, ...buttonElement]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <button @click="${this._clicked}" id="native">
+        <slot></slot>
+      </button>
+    `
+      }
+
+      _clicked () {
+        if (this.getAttribute('type') === 'submit') this.form.submit();
+      }
+    }
+    customElements.define('nn-button', NnButton$1);
+
+    class NnInputButton$1 extends ThemeableMixin('nn-input-button')(FormElementMixin(NativeValidatorMixin(InputMixin(NativeReflectorMixin(LitElement))))) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <input type="button" id="native">
+        <slot></slot>
+     `
+      }
+    }
+    customElements.define('nn-input-button', NnInputButton$1);
+
+    class NnInputCheckbox extends ThemeableMixin('nn-input-checkbox')(FormElementMixin(NativeValidatorMixin(LabelsMixin(StyleableMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="checkbox" as-checkbox value-source="checked" id="native"  real-time-event="click">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    customElements.define('nn-input-checkbox', NnInputCheckbox);
+
+    class NnInputColor$1 extends ThemeableMixin('nn-input-color')(FormElementMixin(NativeValidatorMixin(StyleableMixin(LabelsMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="color" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-color', NnInputColor$1);
+
+    class NnInputDatalist$1 extends ThemeableMixin('nn-input-datalist')(FormElementMixin(NativeValidatorMixin(LabelsMixin(StyleableMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      get skipAttributes () {
+        return [
+          ...super.skipAttributes,
+          'list'
+        ]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      <slot @slotchange="${this.addSlotToSelect}"></slot>
+      ${this.ifValidationMessageBefore}
+      <input type="text" id="native" list="_datalist" real-time-event="input">
+      ${this.ifValidationMessageAfter}
+      <datalist id="_datalist">
+      </datalist>
+      ${this.ifLabelAfter}
+    `
+      }
+
+      addSlotToSelect (e) {
+        const select = this.shadowRoot.querySelector('#_datalist');
+        for (const option of e.srcElement.assignedElements()) {
+          select.appendChild(option);
+        }
+      }
+    }
+    customElements.define('nn-input-datalist', NnInputDatalist$1);
+
+    // This element is a thin wrap to `<input type=text`>.
+
+    class NnInputText$1 extends ThemeableMixin('nn-input-text')(FormElementMixin(NativeValidatorMixin(StyleableMixin(LabelsMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="text" id="native" real-time-event="input">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+      <slot id="datalist-slot" name="datalist"></slot>
+    `
+      }
+
+      static get properties () {
+        return {
+          enterOnSubmit: { type: Boolean, attribute: 'enter-on-submit' }
+        }
+      }
+
+      constructor () {
+        super();
+        this._boundKeyEventListener = this._eventListener.bind(this);
+      }
+
+      // Submit on enter with forms with only one element
+      _eventListener (e) {
+        if (e.keyCode === 13 && ([...this.form.elements].length === 1 || this.enterOnSubmit)) {
+          if (this.form) this.form.submit();
+        }
+      }
+
+      firstUpdated () {
+        super.firstUpdated();
+
+        this.addEventListener('keydown', this._boundKeyEventListener);
+
+        const slot = this.shadowRoot.querySelector('#datalist-slot');
+        const slotFirstAssignedElement = slot && slot.assignedElements()[0];
+        const datalistOptions = slotFirstAssignedElement && slotFirstAssignedElement.children;
+        if (datalistOptions && datalistOptions.length) {
+          const datalistElement = document.createElement('datalist');
+          datalistElement.setAttribute('id', '_datalist');
+          this.setAttribute('list', '_datalist');
+          for (const el of datalistOptions) {
+            const optionElement = document.createElement('option');
+            optionElement.setAttribute('value', el.getAttribute('value'));
+            datalistElement.appendChild(optionElement);
+          }
+          this.shadowRoot.appendChild(datalistElement);
+        }
+      }
+    }
+    customElements.define('nn-input-text', NnInputText$1);
+
+    class NnInputDate$1 extends ThemeableMixin('nn-input-date')(NnInputText$1) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="date" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-date', NnInputDate$1);
+
+    class NnInputDateTimeLocal$1 extends ThemeableMixin('nn-input-date')(NnInputText$1) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="datetime-local" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-datetime-local', NnInputDateTimeLocal$1);
+
+    class NnInputEmail$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="email" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-email', NnInputEmail$1);
+
+    class NnInputFile$1 extends ThemeableMixin('nn-input-file')(FormElementMixin(NativeValidatorMixin(StyleableMixin(LabelsMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      static get styles () {
+        return [
+          super.styles,
+          css`
+        /* From https://zellwk.com/blog/hide-content-accessibly/ */
+        [hidden] {
+          border: 0;
+          clip: rect(0 0 0 0);
+          height: auto; /* new - was 1px */
+          margin: 0; /* new - was -1px */
+          overflow: hidden;
+          padding: 0;
+          position: absolute;
+          width: 1px;
+          white-space: nowrap; /* 1 */
+        }
+      `
+        ]
+      }
+
+      static get properties () {
+        return {
+          fileName: { type: String },
+          manyFilesText: {
+            type: String,
+            attribute: 'many-files-text'
+          }
+        }
+      }
+
+      constructor () {
+        super();
+        this.manyFilesText = 'Many';
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        // From https://stackoverflow.com/a/25825731/829771
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="file" id="native" @change="${this.fileNameChanged}" hidden>
+      ${this.ifValidationMessageAfter}
+      ${this.fileName}
+      ${this.ifLabelAfter}
+    `
+      }
+
+      fileNameChanged (e) {
+        const native = this.shadowRoot.querySelector('#native');
+        this.fileName = native.files.length > 1 ? this.manyFilesText : native.value;
+      }
+    }
+    customElements.define('nn-input-file', NnInputFile$1);
+
+    class NnInputMonth$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="month" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-month', NnInputMonth$1);
+
+    class NnInputNumber$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="number" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-number', NnInputNumber$1);
+
+    class NnInputPassword$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="password" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-password', NnInputPassword$1);
+
+    class NnInputRadio$1 extends ThemeableMixin('nn-input-radio')(FormElementMixin(NativeValidatorMixin(LabelsMixin(StyleableMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input as-radio value-source="checked" @change="${this._excludeOthers}" type="radio" id="native"  real-time-event="input">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+
+      _excludeOthers (e) {
+        // All other elements with the same name, marked as `as-radio`
+        const others = [...this.form.elements].filter(el =>
+          el !== this &&
+          el.getAttribute('name') &&
+          el.getAttribute('name') === this.getAttribute('name') &&
+          el.getAttribute('as-radio') !== null
+        );
+        for (const el of others) {
+          const prop = el.getAttribute('value-source') || 'checked';
+          el[prop] = false;
+        }
+      }
+    }
+    customElements.define('nn-input-radio', NnInputRadio$1);
+
+    class NnInputRange$1 extends ThemeableMixin('nn-input-range')(FormElementMixin(NativeValidatorMixin(StyleableMixin(LabelsMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="range" id="native" real-time-event="input">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-range', NnInputRange$1);
+
+    class NnInputSearch$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="search" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-search', NnInputSearch$1);
+
+    class NnInputSubmit$1 extends ThemeableMixin('nn-input-submit')(FormElementMixin(NativeValidatorMixin(InputMixin(NativeReflectorMixin(LitElement))))) {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      <input @click="${this._formSubmit}" type="submit" id="native">
+    `
+      }
+
+      _formSubmit (e) {
+        if (this.form) {
+          this.form.submit();
+        }
+      }
+    }
+    customElements.define('nn-input-submit', NnInputSubmit$1);
+
+    class NnInputTel$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="tel" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-tel', NnInputTel$1);
+
+    class NnInputTime$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="time" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-time', NnInputTime$1);
+
+    class NnInputUrl$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="url" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-url', NnInputUrl$1);
+
+    class NnInputWeek$1 extends NnInputText$1 {
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <input type="week" id="native">
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    window.customElements.define('nn-input-week', NnInputWeek$1);
+
+    class NnMeter$1 extends ThemeableMixin('nn-meter')(StyleableMixin(LabelsMixin(NativeReflectorMixin(LitElement)))) {
+      get reflectProperties () {
+        return [...super.reflectProperties, ...meterElement]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <meter id="native" real-time-event="input"></meter>
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    customElements.define('nn-meter', NnMeter$1);
+
+    class NnProgress$1 extends ThemeableMixin('nn-progress')(StyleableMixin(LabelsMixin(NativeReflectorMixin(LitElement)))) {
+      static get properties () {
+        return {
+        }
+      }
+
+      static get styles () {
+        return [
+          css`
+      progress {
+        display: block; /* default: inline-block */
+        width: 100%;
+        margin: auto;
+        padding: 2px;
+        border: 0 none;
+        background: #777;
+        border-radius: 14px;
+        box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+      }
+      progress::-moz-progress-bar {
+        border-radius: 12px;
+        background: var(--nn-progress-color, #fff);
+        box-shadow: inset 0 -2px 4px rgba(0,0,0,0.4), 0 2px 5px 0px rgba(0,0,0,0.3);
+        
+      }
+      /* webkit */
+      @media screen and (-webkit-min-device-pixel-ratio:0) {
+        progress {
+          height: 10px;
+        }
+      }
+      progress::-webkit-progress-bar {
+        background: transparent;
+      }  
+      progress::-webkit-progress-value {  
+        border-radius: 12px;
+        background: var(--nn-progress-color, #fff);
+        box-shadow: inset 0 -2px 4px rgba(0,0,0,0.4), 0 2px 5px 0px rgba(0,0,0,0.3); 
+      } 
+      `
+        ]
+      }
+
+      get reflectProperties () {
+        return [...super.reflectProperties, ...progressElement]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <progress id="native" real-time-event="input"></progress>
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    customElements.define('nn-progress', NnProgress$1);
+
+    class NnSelect$1 extends ThemeableMixin('nn-select')(FormElementMixin(NativeValidatorMixin(LabelsMixin(InputMixin(NativeReflectorMixin(LitElement)))))) {
+      get reflectProperties () {
+        return [...super.reflectProperties, ...selectElement]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <slot @slotchange="${this.addSlotToSelect}"></slot>
+      <select id="native" real-time-event="selected"></select>
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+
+      addSlotToSelect (e) {
+        const select = this.shadowRoot.querySelector('#native');
+        for (const option of e.srcElement.assignedElements()) {
+          select.appendChild(option);
+        }
+
+        // The element's value depends on what it can contain. For example
+        // the first selected option will be the element's value.
+        // The assign will ensure that the value is updated as a property
+        // This will trigger the setter, which will in turn trigger
+        // `afterSettingProperty` (which is used for example by
+        // AddHasValueAttributeMixin to set the has-value property)
+        //
+        this.value = this.value; // eslint-disable-line
+      }
+    }
+    customElements.define('nn-select', NnSelect$1);
+
+    class NnTextArea$1 extends ThemeableMixin('nn-textarea')(StyleableMixin(FormElementMixin(NativeValidatorMixin(LabelsMixin(InputMixin(NativeReflectorMixin(LitElement))))))) {
+      get reflectProperties () {
+        return [...super.reflectProperties, ...textAreaElement]
+      }
+
+      render () {
+        if (this.themeRender) return this.themeRender()
+        return html`
+      ${this.ifLabelBefore}
+      ${this.ifValidationMessageBefore}
+      <textarea name="" id="native" real-time-event="input"></textarea>
+      ${this.ifValidationMessageAfter}
+      ${this.ifLabelAfter}
+    `
+      }
+    }
+    customElements.define('nn-textarea', NnTextArea$1);
+
     class PageMain extends LitElement {
       static get styles() {
         return css`
@@ -2773,6 +8977,7 @@
         switch (this.page) {
           case 'main':
             return html`
+          <nn-input-text label="Your name"></nn-input-text>
           <page-main .logo=${openWcLogo}></page-main>
           ${this.data.map(d => {
             return html`${JSON.stringify(d)}`

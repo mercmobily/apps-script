@@ -16,7 +16,9 @@
   "author": "Tony Mobily",
   "license": "MIT",
   "dependencies": {
+    "lit-element": "^2.0.1",
     "lit-html": "^1.0.0",
-    "lit-element": "^2.0.1"
+    "tpe": "0.0.19",
+    "tpe-material": "0.0.19"
   }
 }

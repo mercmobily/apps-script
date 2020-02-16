@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { openWcLogo } from './open-wc-logo.js';
+import 'tpe-material/material'
+import 'tpe/tpe'
+
 
 import '../../page-main/page-main.js';
 import '../../page-one/page-one.js';
@@ -122,6 +125,7 @@ export class AppsScript extends LitElement {
     switch (this.page) {
       case 'main':
         return html`
+          <nn-input-text label="Your name"></nn-input-text>
           <page-main .logo=${openWcLogo}></page-main>
           ${this.data.map(d => {
             return html`${JSON.stringify(d)}`
