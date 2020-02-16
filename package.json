@@ -1,16 +1,14 @@
 {
   "scripts": {
+    "build-test": "rimraf distr && rollup -c rollup.testing.config.js && cat index.html.HEADER /tmp/built.js index.html.FOOTER > appsScript/index.html",
     "build": "rimraf distr && rollup -c rollup.config.js && cat index.html.HEADER /tmp/built.js index.html.FOOTER > appsScript/index.html",
     "push": "cd appsScript; clasp push",
-    "start": "cd appsScript; clasp open --webapp",
-    "buildPush": "npm run build; npm run push",
-    "buildPushStart": "npm run buildPush; npm run start"
+    "start": "cd appsScript; clasp open --webapp"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^0.15.1",
     "rimraf": "^2.6.3",
-    "rollup": "^1.15.4",
-    "es-dev-server": "^1.5.0"
+    "rollup": "^1.15.4"
   },
   "name": "apps-script-app",
   "version": "0.0.1",
