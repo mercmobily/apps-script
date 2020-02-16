@@ -11,7 +11,22 @@ export class WattleApp extends LitElement {
     return {
       title: { type: String },
       page: { type: String },
+      data: { type: Array }
     };
+  }
+
+  constructor () {
+    super()
+    this.data = []
+    this.page = 'main';
+  }
+
+  firstUpdated () {
+
+    const success = (data) => this.data = data
+    this.data = google.script.run.withSuccessHandler(success).getData();
+
+    debugger
   }
 
   static get styles() {
@@ -73,12 +88,8 @@ export class WattleApp extends LitElement {
     `;
   }
 
-  constructor() {
-    super();
-    this.page = 'main';
-  }
-
   render() {
+    debugger
     return html`
       <header>
         <ul>
@@ -99,6 +110,10 @@ export class WattleApp extends LitElement {
           </li>
         </ul>
       </header>
+
+      ${this.data.map(line => {
+        return html`${JSON.stringify(line)}`
+      })}
 
       <main>
         ${this._renderPage()}

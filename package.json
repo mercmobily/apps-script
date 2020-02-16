@@ -1,9 +1,11 @@
 {
   "scripts": {
-    "script-push": "cd appsScript; clasp push",
-    "build": "rimraf distr && rollup -c rollup.config.js",
-    "buildPush": "npm run build; git add distr; git commit -m 'Built'; git push",
-    "start": "cd appsScript; clasp open --webapp"
+    "build": "rimraf distr && rollup -c rollup.config.js && cat index.html.HEADER distr/wattle-app.js index.html.FOOTER > appsScript/index.html",
+    "push": "cd appsScript; clasp push",
+    "start": "cd appsScript; clasp open --webapp",
+    "buildPush": "npm run build; npm run push",
+    "buildPushStart": "npm run buildPush; npm run start",
+
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^0.15.1",
