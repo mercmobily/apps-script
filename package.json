@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "start:build": "cd dist && es-dev-server --open",
     "build": "rimraf dist && rollup -c rollup.config.js",
-    "start": "es-dev-server --app-index index.html --node-resolve --open --watch"
+    "push": "git push; clasp push"
+    "start": "clasp open --webapp"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^0.15.1",

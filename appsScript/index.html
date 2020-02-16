@@ -19,6 +19,14 @@
 <body>
   <wattle-app title="Hello owc world!"></wattle-app>
 
+  <script>
+  function success( data ){
+    console.log(data)
+  }
+  this.data = google.script.run.withSuccessHandler( success ).getData();
+
+  </script>
+
   <script type="module" src="https://cdn.jsdelivr.net/gh/mercmobily/wattle/distr/wattle-app.js"></script>
 </body>
 
