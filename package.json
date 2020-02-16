@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "build": "rimraf dist && rollup -c rollup.config.js",
-    "push": "git push; clasp push"
-    "start": "clasp open --webapp"
+    "script-push": "cd appsScript; clasp push",
+    "build": "rimraf distr && rollup -c rollup.config.js",
+    "buildPush": "npm run build; git add distr; git commit -m 'Built'; git push",
+    "start": "cd appsScript; clasp open --webapp"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^0.15.1",
