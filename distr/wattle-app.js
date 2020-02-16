@@ -2629,6 +2629,7 @@ class WattleApp extends LitElement {
     return {
       title: { type: String },
       page: { type: String },
+      data: { type: Array }
     };
   }
 
