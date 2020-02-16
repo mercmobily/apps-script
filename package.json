@@ -11,7 +11,7 @@
     "es-dev-server": "^1.5.0"
   },
   "name": "wattle-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Webcomponent wattle-app following open-wc recommendations",
   "author": "wattle-app",
   "license": "MIT",
